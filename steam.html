@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>We n Steam – Miskatonic</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            background-image: url('professorsanych.png');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            font-family: 'Patrick Hand', cursive, Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            color: white;
+            text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.8);
+        }
+
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+            width: 100%;
+            flex-wrap: wrap;
+            margin-top: 20px;
+            margin-bottom: 30px;
+        }
+
+        .header img {
+            height: 50px;
+            width: auto;
+        }
+
+        .header h1 {
+            font-size: 3.5rem;
+            font-weight: normal;
+            letter-spacing: 4px;
+            background: rgba(0, 0, 0, 0.4);
+            padding: 10px 30px;
+            border-radius: 30px;
+            backdrop-filter: blur(2px);
+            text-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+        }
+
+        .cards-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 30px;
+            max-width: 1000px;
+            width: 100%;
+            margin: 20px 0;
+        }
+
+        .card {
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(4px);
+            border-radius: 20px;
+            padding: 20px;
+            width: 280px;
+            text-align: center;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            text-decoration: none;
+            color: white;
+        }
+
+        .card:hover {
+            transform: scale(1.03);
+            box-shadow: 0 0 30px rgba(255, 215, 0, 0.3);
+            border-color: #ffd700;
+        }
+
+        .card img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            border: 3px solid #ffd700;
+            object-fit: cover;
+            margin-bottom: 10px;
+        }
+
+        .card h2 {
+            font-size: 1.8rem;
+            color: #ffe484;
+            margin-bottom: 5px;
+        }
+
+        .card .status {
+            font-size: 1rem;
+            color: #a8d8a8;
+            margin-bottom: 10px;
+        }
+
+        .card .info {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            color: #ddd;
+        }
+
+        .card .info span {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 2px 12px;
+            border-radius: 12px;
+            margin: 3px 4px;
+            font-size: 0.9rem;
+        }
+
+        .back-link {
+            margin-top: 30px;
+            display: inline-block;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(4px);
+            padding: 12px 35px;
+            border-radius: 50px;
+            font-size: 1.6rem;
+            color: #ffe484;
+            text-decoration: none;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .back-link:hover {
+            background: rgba(255, 215, 0, 0.3);
+            border-color: #ffd700;
+            transform: scale(1.05);
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.4);
+        }
+
+        @media (max-width: 700px) {
+            .header h1 {
+                font-size: 2.2rem;
+                padding: 5px 15px;
+            }
+            .header img {
+                height: 35px;
+            }
+            .card {
+                width: 100%;
+                max-width: 300px;
+            }
+            .back-link {
+                font-size: 1.2rem;
+                padding: 10px 20px;
+            }
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Patrick+Hand&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <div class="header">
+        <img src="znidosquid.png" alt="znidosquid left">
+        <h1>We n Steam</h1>
+        <img src="znidosquid.png" alt="znidosquid right">
+    </div>
+
+    <div class="cards-container">
+
+        <!-- Card 1: Just a latte -->
+        <a href="https://steamcommunity.com/id/angelvanillablood/" target="_blank" class="card">
+            <img src="gigi.png" alt="Just a latte">
+            <h2>Just a latte</h2>
+            <div class="status">🟢 Online</div>
+            <div class="info">
+                <span>🎮 169 games</span>
+                <span>🏆 Level 23</span>
+                <span>📦 594 screenshots</span>
+                <span>🛠 3 workshop items</span>
+            </div>
+        </a>
+
+        <!-- Card 2: oumer -->
+        <a href="https://steamcommunity.com/id/pchelik228/" target="_blank" class="card">
+            <img src="phish.png" alt="oumer">
+            <h2>oumer</h2>
+            <div class="status">⚪ Offline</div>
+            <div class="info">
+                <span>🎮 44 games</span>
+                <span>🏆 Level 13</span>
+                <span>📦 5 screenshots</span>
+                <span>🛠 3 workshop items</span>
+            </div>
+        </a>
+
+        <!-- Card 3: Workshop of Just a latte -->
+        <a href="https://steamcommunity.com/id/angelvanillablood/myworkshopfiles/" target="_blank" class="card">
+            <img src="boykisshero.png" alt="Workshop">
+            <h2>Workshop</h2>
+            <div class="status">🛠 Items by Just a latte</div>
+            <div class="info">
+                <span>📦 3 items</span>
+                <span>🎮 Garry's Mod</span>
+                <span>👀 3 subscribers</span>
+            </div>
+        </a>
+
+    </div>
+
+    <a href="index.html" class="back-link">← Back to main</a>
+
+    <!-- Music -->
+    <audio autoplay loop>
+        <source src="nerd.mp3" type="audio/mpeg">
+    </audio>
+
+</body>
+</html>
