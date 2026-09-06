@@ -21,6 +21,7 @@
             text-shadow: 2px 2px 6px rgba(0,0,0,0.8);
             position: relative;
         }
+        /* Переключатель языков (две кнопки) */
         .lang-switch {
             position: fixed;
             top: 15px;
@@ -55,6 +56,7 @@
         .lang-option:hover:not(.active) { color: #fff; }
         .lang-option:focus { outline: none; }
 
+        /* Ползунок громкости */
         .volume-control {
             position: fixed;
             top: 70px;
@@ -70,7 +72,12 @@
             gap: 8px;
         }
         .volume-control span { color: #ffe484; font-size: 1.2rem; }
-        .volume-control input[type="range"] { width: 80px; accent-color: #ffd700; background: transparent; cursor: pointer; }
+        .volume-control input[type="range"] {
+            width: 80px;
+            accent-color: #ffd700;
+            background: transparent;
+            cursor: pointer;
+        }
         @media (max-width: 700px) {
             .volume-control { top: 60px; right: 10px; padding: 4px 8px; }
             .volume-control input[type="range"] { width: 60px; }
@@ -160,11 +167,13 @@
 </head>
 <body>
 
+    <!-- Переключатель языков -->
     <div class="lang-switch">
         <button class="lang-option active" data-lang="ru" id="langRu">RU</button>
         <button class="lang-option" data-lang="en" id="langEn">EN</button>
     </div>
 
+    <!-- Ползунок громкости -->
     <div class="volume-control">
         <span>🔊</span>
         <input type="range" min="0" max="1" step="0.01" value="0.5" id="volumeSlider">
@@ -192,27 +201,35 @@
         Сайт создан в развлекательных и пародийных целях, не является коммерческим проектом.
     </div>
 
+    <!-- Фоновая музыка -->
     <audio loop>
         <source src="nerd.mp3" type="audio/mpeg">
     </audio>
 
     <script>
+        // === Музыка + ползунок громкости ===
         (function() {
             var audio = document.querySelector('audio');
             var slider = document.getElementById('volumeSlider');
             if (!audio || !slider) return;
-            var savedVolume = localStorage.getItem('siteVolume');
-            if (savedVolume !== null) {
-                audio.volume = parseFloat(savedVolume);
-                slider.value = savedVolume;
+
+            // Загружаем сохранённую громкость
+            var saved = localStorage.getItem('siteVolume');
+            if (saved !== null) {
+                audio.volume = parseFloat(saved);
+                slider.value = saved;
             } else {
                 audio.volume = 0.5;
                 slider.value = 0.5;
             }
+
+            // Изменение громкости
             slider.addEventListener('input', function() {
                 audio.volume = parseFloat(this.value);
                 localStorage.setItem('siteVolume', this.value);
             });
+
+            // Автозапуск
             audio.play().catch(function() {
                 document.addEventListener('click', function playOnClick() {
                     audio.play();
@@ -221,6 +238,7 @@
             });
         })();
 
+        // === Переключение языка (RU/EN) ===
         (function() {
             var translations = {
                 ru: {
@@ -247,6 +265,7 @@
                 document.getElementById('aboutText').innerHTML = t.text;
                 document.getElementById('backLink').textContent = t.back;
                 document.getElementById('disclaimer').innerHTML = t.disclaimer.replace(/\n/g, '<br>');
+                // Активная кнопка
                 if (lang === 'ru') {
                     langRu.classList.add('active');
                     langEn.classList.remove('active');
