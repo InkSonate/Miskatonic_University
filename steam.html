@@ -19,6 +19,29 @@
             padding: 20px;
             color: white;
             text-shadow: 2px 2px 6px rgba(0,0,0,0.8);
+            position: relative;
+        }
+        .lang-switch {
+            position: fixed;
+            top: 15px;
+            right: 15px;
+            background: rgba(0,0,0,0.7);
+            color: #ffe484;
+            border: 2px solid rgba(255,255,255,0.3);
+            border-radius: 30px;
+            padding: 8px 18px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            cursor: pointer;
+            z-index: 1000;
+            backdrop-filter: blur(4px);
+            transition: all 0.3s;
+            font-family: 'Patrick Hand', cursive;
+        }
+        .lang-switch:hover {
+            background: rgba(255,215,0,0.3);
+            border-color: #ffd700;
+            transform: scale(1.05);
         }
         .header {
             display: flex;
@@ -129,6 +152,7 @@
             border-radius: 10px;
         }
         @media (max-width: 700px) {
+            .lang-switch { top: 10px; right: 10px; font-size: 1rem; padding: 5px 12px; }
             .header img { display: none; }
             .header h1 { font-size: 2.2rem; padding: 8px 20px; }
             .card { width: 100%; max-width: 300px; }
@@ -140,50 +164,55 @@
 </head>
 <body>
 
+    <button class="lang-switch" id="langToggle">RU</button>
+
     <div class="header">
         <img src="znidosquid.png" alt="znidosquid left">
-        <h1>We n Steam</h1>
+        <h1 id="pageTitle">We n Steam</h1>
         <img src="znidosquid.png" alt="znidosquid right">
     </div>
 
     <div class="cards-container">
+        <!-- Карточка 1 -->
         <a href="https://steamcommunity.com/id/angelvanillablood/" target="_blank" class="card">
             <img src="gigi.png" alt="Just a latte">
             <h2>Just a latte</h2>
-            <div class="status">🟢 Online</div>
+            <div class="status" id="status1">🟢 Online</div>
             <div class="info">
-                <span>🎮 169 games</span>
-                <span>🏆 Level 23</span>
-                <span>📦 594 screenshots</span>
-                <span>🛠 3 workshop items</span>
+                <span id="games1">🎮 169 games</span>
+                <span id="level1">🏆 Level 23</span>
+                <span id="screens1">📦 594 screenshots</span>
+                <span id="workshop1">🛠 3 workshop items</span>
             </div>
         </a>
+        <!-- Карточка 2 -->
         <a href="https://steamcommunity.com/id/pchelik228/" target="_blank" class="card">
             <img src="phish.png" alt="oumer">
             <h2>oumer</h2>
-            <div class="status">⚪ Offline</div>
+            <div class="status" id="status2">⚪ Offline</div>
             <div class="info">
-                <span>🎮 44 games</span>
-                <span>🏆 Level 13</span>
-                <span>📦 5 screenshots</span>
-                <span>🛠 3 workshop items</span>
+                <span id="games2">🎮 44 games</span>
+                <span id="level2">🏆 Level 13</span>
+                <span id="screens2">📦 5 screenshots</span>
+                <span id="workshop2">🛠 3 workshop items</span>
             </div>
         </a>
+        <!-- Карточка 3 -->
         <a href="https://steamcommunity.com/id/angelvanillablood/myworkshopfiles/" target="_blank" class="card">
             <img src="boykisshero.png" alt="Workshop">
-            <h2>Workshop</h2>
-            <div class="status">🛠 Items by Just a latte</div>
+            <h2 id="wsTitle">Workshop</h2>
+            <div class="status" id="wsStatus">🛠 Items by Just a latte</div>
             <div class="info">
-                <span>📦 3 items</span>
-                <span>🎮 Garry's Mod</span>
-                <span>👀 3 subscribers</span>
+                <span id="wsItems">📦 3 items</span>
+                <span id="wsGame">🎮 Garry's Mod</span>
+                <span id="wsSubs">👀 3 subscribers</span>
             </div>
         </a>
     </div>
 
-    <a href="index.html" class="back-link">← Back to main</a>
+    <a href="index.html" class="back-link" id="backLink">← Back to main</a>
 
-    <div class="disclaimer">
+    <div class="disclaimer" id="disclaimer">
         Все использованные изображения и материалы принадлежат их законным владельцам.<br>
         Сайт создан в развлекательных и пародийных целях, не является коммерческим проектом.
     </div>
@@ -192,7 +221,7 @@
         <source src="nerd.mp3" type="audio/mpeg">
     </audio>
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
+        (function() {
             var audio = document.querySelector('audio');
             if (audio) {
                 audio.play().catch(function() {
@@ -202,7 +231,87 @@
                     }, { once: true });
                 });
             }
-        });
+        })();
+
+        (function() {
+            var translations = {
+                ru: {
+                    title: 'We n Steam',
+                    status1: '🟢 В сети',
+                    games1: '🎮 169 игр',
+                    level1: '🏆 Уровень 23',
+                    screens1: '📦 594 скриншота',
+                    workshop1: '🛠 3 предмета в мастерской',
+                    status2: '⚪ Не в сети',
+                    games2: '🎮 44 игры',
+                    level2: '🏆 Уровень 13',
+                    screens2: '📦 5 скриншотов',
+                    workshop2: '🛠 3 предмета в мастерской',
+                    wsTitle: 'Мастерская',
+                    wsStatus: '🛠 Предметы Just a latte',
+                    wsItems: '📦 3 предмета',
+                    wsGame: '🎮 Garry\'s Mod',
+                    wsSubs: '👀 3 подписчика',
+                    back: '← На главную',
+                    disclaimer: 'Все использованные изображения и материалы принадлежат их законным владельцам.\nСайт создан в развлекательных и пародийных целях, не является коммерческим проектом.'
+                },
+                en: {
+                    title: 'We n Steam',
+                    status1: '🟢 Online',
+                    games1: '🎮 169 games',
+                    level1: '🏆 Level 23',
+                    screens1: '📦 594 screenshots',
+                    workshop1: '🛠 3 workshop items',
+                    status2: '⚪ Offline',
+                    games2: '🎮 44 games',
+                    level2: '🏆 Level 13',
+                    screens2: '📦 5 screenshots',
+                    workshop2: '🛠 3 workshop items',
+                    wsTitle: 'Workshop',
+                    wsStatus: '🛠 Items by Just a latte',
+                    wsItems: '📦 3 items',
+                    wsGame: '🎮 Garry\'s Mod',
+                    wsSubs: '👀 3 subscribers',
+                    back: '← Back to main',
+                    disclaimer: 'All images and materials used belong to their respective owners.\nThis site is for entertainment and parody purposes only, and is not a commercial project.'
+                }
+            };
+
+            var currentLang = localStorage.getItem('siteLang') || 'ru';
+            var toggleBtn = document.getElementById('langToggle');
+
+            function setLanguage(lang) {
+                var t = translations[lang];
+                document.getElementById('pageTitle').textContent = t.title;
+                document.getElementById('status1').textContent = t.status1;
+                document.getElementById('games1').textContent = t.games1;
+                document.getElementById('level1').textContent = t.level1;
+                document.getElementById('screens1').textContent = t.screens1;
+                document.getElementById('workshop1').textContent = t.workshop1;
+                document.getElementById('status2').textContent = t.status2;
+                document.getElementById('games2').textContent = t.games2;
+                document.getElementById('level2').textContent = t.level2;
+                document.getElementById('screens2').textContent = t.screens2;
+                document.getElementById('workshop2').textContent = t.workshop2;
+                document.getElementById('wsTitle').textContent = t.wsTitle;
+                document.getElementById('wsStatus').textContent = t.wsStatus;
+                document.getElementById('wsItems').textContent = t.wsItems;
+                document.getElementById('wsGame').textContent = t.wsGame;
+                document.getElementById('wsSubs').textContent = t.wsSubs;
+                document.getElementById('backLink').textContent = t.back;
+                document.getElementById('disclaimer').innerHTML = t.disclaimer.replace(/\n/g, '<br>');
+                toggleBtn.textContent = lang === 'ru' ? 'EN' : 'RU';
+                localStorage.setItem('siteLang', lang);
+            }
+
+            toggleBtn.addEventListener('click', function() {
+                var nextLang = currentLang === 'ru' ? 'en' : 'ru';
+                currentLang = nextLang;
+                setLanguage(nextLang);
+            });
+
+            setLanguage(currentLang);
+        })();
     </script>
 </body>
 </html>

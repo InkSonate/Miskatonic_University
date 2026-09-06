@@ -20,6 +20,30 @@
             padding: 20px;
             color: white;
             text-shadow: 2px 2px 6px rgba(0,0,0,0.8);
+            position: relative;
+        }
+        /* Кнопка переключения языка */
+        .lang-switch {
+            position: fixed;
+            top: 15px;
+            right: 15px;
+            background: rgba(0,0,0,0.7);
+            color: #ffe484;
+            border: 2px solid rgba(255,255,255,0.3);
+            border-radius: 30px;
+            padding: 8px 18px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            cursor: pointer;
+            z-index: 1000;
+            backdrop-filter: blur(4px);
+            transition: all 0.3s;
+            font-family: 'Patrick Hand', cursive;
+        }
+        .lang-switch:hover {
+            background: rgba(255,215,0,0.3);
+            border-color: #ffd700;
+            transform: scale(1.05);
         }
         .header {
             display: flex;
@@ -92,8 +116,6 @@
             transition: color 0.3s;
         }
         .bottom-left a:hover { color: #fff; text-decoration: underline; }
-
-        /* Дисклеймер */
         .disclaimer {
             margin-top: 30px;
             font-size: 0.7rem;
@@ -105,10 +127,8 @@
             padding: 8px 15px;
             border-radius: 10px;
         }
-        .disclaimer a { color: rgba(255,255,255,0.6); }
-
-        /* Мобильная версия */
         @media (max-width: 700px) {
+            .lang-switch { top: 10px; right: 10px; font-size: 1rem; padding: 5px 12px; }
             .header img { display: none; }
             .header h1 { font-size: 2.2rem; padding: 8px 20px; letter-spacing: 2px; }
             .btn { width: 90%; max-width: 350px; min-width: unset; font-size: 1.6rem; padding: 14px 20px; border-radius: 30px; }
@@ -134,35 +154,36 @@
 </head>
 <body>
 
+    <button class="lang-switch" id="langToggle">RU</button>
+
     <div class="header">
-        <img src="znidosquid.png" alt="znidosquid left">
-        <h1>Miskatonic University</h1>
-        <img src="znidosquid.png" alt="znidosquid right">
+        <img src="znidosquid.png" alt="znidosquid left" id="iconLeft">
+        <h1 id="mainTitle">Miskatonic University</h1>
+        <img src="znidosquid.png" alt="znidosquid right" id="iconRight">
     </div>
 
     <div class="main-center">
-        <a href="about.html" class="btn">About Us</a>
-        <a href="steam.html" class="btn">We n Steam</a>
-        <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" target="_blank" class="btn">Nothing here yet</a>
+        <a href="about.html" class="btn" id="btnAbout">About Us</a>
+        <a href="steam.html" class="btn" id="btnSteam">We n Steam</a>
+        <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" target="_blank" class="btn" id="btnRick">Nothing here yet</a>
     </div>
 
     <div class="bottom-left">
         <img src="waiting.gif" alt="waiting">
-        <a href="https://t.me/MiskatonicTeaParty" target="_blank">t.me/MiskatonicTeaParty</a>
+        <a href="https://t.me/MiskatonicTeaParty" target="_blank" id="tgLink">t.me/MiskatonicTeaParty</a>
     </div>
 
-    <!-- Дисклеймер -->
-    <div class="disclaimer">
+    <div class="disclaimer" id="disclaimer">
         Все использованные изображения и материалы принадлежат их законным владельцам.<br>
         Сайт создан в развлекательных и пародийных целях, не является коммерческим проектом.
     </div>
 
-    <!-- Аудио и скрипт для автовоспроизведения -->
     <audio loop>
         <source src="nerd.mp3" type="audio/mpeg">
     </audio>
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
+        // Музыка
+        (function() {
             var audio = document.querySelector('audio');
             if (audio) {
                 audio.play().catch(function() {
@@ -172,7 +193,54 @@
                     }, { once: true });
                 });
             }
-        });
+        })();
+
+        // Переключение языка
+        (function() {
+            // Тексты для двух языков
+            var translations = {
+                ru: {
+                    title: 'Miskatonic University',
+                    btnAbout: 'About Us',
+                    btnSteam: 'We n Steam',
+                    btnRick: 'Nothing here yet',
+                    tg: 't.me/MiskatonicTeaParty',
+                    disclaimer: 'Все использованные изображения и материалы принадлежат их законным владельцам.\nСайт создан в развлекательных и пародийных целях, не является коммерческим проектом.'
+                },
+                en: {
+                    title: 'Miskatonic University',
+                    btnAbout: 'About Us',
+                    btnSteam: 'We n Steam',
+                    btnRick: 'Nothing here yet',
+                    tg: 't.me/MiskatonicTeaParty',
+                    disclaimer: 'All images and materials used belong to their respective owners.\nThis site is for entertainment and parody purposes only, and is not a commercial project.'
+                }
+            };
+
+            var currentLang = localStorage.getItem('siteLang') || 'ru';
+            var toggleBtn = document.getElementById('langToggle');
+
+            function setLanguage(lang) {
+                var t = translations[lang];
+                document.getElementById('mainTitle').textContent = t.title;
+                document.getElementById('btnAbout').textContent = t.btnAbout;
+                document.getElementById('btnSteam').textContent = t.btnSteam;
+                document.getElementById('btnRick').textContent = t.btnRick;
+                document.getElementById('tgLink').textContent = t.tg;
+                document.getElementById('disclaimer').innerHTML = t.disclaimer.replace(/\n/g, '<br>');
+                toggleBtn.textContent = lang === 'ru' ? 'EN' : 'RU';
+                localStorage.setItem('siteLang', lang);
+            }
+
+            toggleBtn.addEventListener('click', function() {
+                var nextLang = currentLang === 'ru' ? 'en' : 'ru';
+                currentLang = nextLang;
+                setLanguage(nextLang);
+            });
+
+            // Устанавливаем язык при загрузке
+            setLanguage(currentLang);
+        })();
     </script>
 </body>
 </html>
