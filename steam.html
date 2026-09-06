@@ -25,24 +25,57 @@
             position: fixed;
             top: 15px;
             right: 15px;
-            background: rgba(0,0,0,0.7);
-            color: #ffe484;
-            border: 2px solid rgba(255,255,255,0.3);
-            border-radius: 30px;
-            padding: 8px 18px;
-            font-size: 1.2rem;
-            font-weight: bold;
-            cursor: pointer;
-            z-index: 1000;
+            display: flex;
+            gap: 5px;
+            background: rgba(0,0,0,0.6);
             backdrop-filter: blur(4px);
+            padding: 5px 10px;
+            border-radius: 30px;
+            border: 2px solid rgba(255,255,255,0.2);
+            z-index: 1000;
+        }
+        .lang-option {
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            color: #aaa;
+            cursor: pointer;
             transition: all 0.3s;
             font-family: 'Patrick Hand', cursive;
+            background: transparent;
+            border: none;
+            text-shadow: none;
         }
-        .lang-switch:hover {
-            background: rgba(255,215,0,0.3);
-            border-color: #ffd700;
-            transform: scale(1.05);
+        .lang-option.active {
+            background: #ffe484;
+            color: #1a1a1a;
+            box-shadow: 0 0 15px rgba(255,215,0,0.4);
         }
+        .lang-option:hover:not(.active) { color: #fff; }
+        .lang-option:focus { outline: none; }
+
+        .volume-control {
+            position: fixed;
+            top: 70px;
+            right: 15px;
+            z-index: 1000;
+            background: rgba(0,0,0,0.6);
+            backdrop-filter: blur(4px);
+            padding: 6px 12px;
+            border-radius: 30px;
+            border: 1px solid rgba(255,255,255,0.2);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .volume-control span { color: #ffe484; font-size: 1.2rem; }
+        .volume-control input[type="range"] { width: 80px; accent-color: #ffd700; background: transparent; cursor: pointer; }
+        @media (max-width: 700px) {
+            .volume-control { top: 60px; right: 10px; padding: 4px 8px; }
+            .volume-control input[type="range"] { width: 60px; }
+        }
+
         .header {
             display: flex;
             align-items: center;
@@ -152,7 +185,10 @@
             border-radius: 10px;
         }
         @media (max-width: 700px) {
-            .lang-switch { top: 10px; right: 10px; font-size: 1rem; padding: 5px 12px; }
+            .lang-switch { top: 10px; right: 10px; padding: 3px 8px; }
+            .lang-option { font-size: 0.9rem; padding: 3px 10px; }
+            .volume-control { top: 55px; right: 8px; }
+            .volume-control input[type="range"] { width: 50px; }
             .header img { display: none; }
             .header h1 { font-size: 2.2rem; padding: 8px 20px; }
             .card { width: 100%; max-width: 300px; }
@@ -164,7 +200,15 @@
 </head>
 <body>
 
-    <button class="lang-switch" id="langToggle">RU</button>
+    <div class="lang-switch">
+        <button class="lang-option active" data-lang="ru" id="langRu">RU</button>
+        <button class="lang-option" data-lang="en" id="langEn">EN</button>
+    </div>
+
+    <div class="volume-control">
+        <span>🔊</span>
+        <input type="range" min="0" max="1" step="0.01" value="0.5" id="volumeSlider">
+    </div>
 
     <div class="header">
         <img src="znidosquid.png" alt="znidosquid left">
@@ -173,7 +217,6 @@
     </div>
 
     <div class="cards-container">
-        <!-- Карточка 1: Just a latte -->
         <a href="https://steamcommunity.com/id/angelvanillablood/" target="_blank" class="card">
             <img src="gigi.png" alt="Just a latte">
             <h2>Just a latte</h2>
@@ -185,8 +228,6 @@
                 <span id="workshop1">🛠 3 workshop items</span>
             </div>
         </a>
-
-        <!-- Карточка 2: oumer -->
         <a href="https://steamcommunity.com/id/pchelik228/" target="_blank" class="card">
             <img src="phish.png" alt="oumer">
             <h2>oumer</h2>
@@ -198,8 +239,6 @@
                 <span id="workshop2">🛠 3 workshop items</span>
             </div>
         </a>
-
-        <!-- Новая карточка 3: Charlotte_cute_UwU -->
         <a href="https://steamcommunity.com/id/Charlotte_cute_UwU/" target="_blank" class="card">
             <img src="faradenza.png" alt="Charlotte_cute_UwU">
             <h2>Charlotte_cute_UwU</h2>
@@ -211,8 +250,6 @@
                 <span id="workshop3">🛠 0 workshop items</span>
             </div>
         </a>
-
-        <!-- Карточка 4: Workshop Just a latte -->
         <a href="https://steamcommunity.com/id/angelvanillablood/myworkshopfiles/" target="_blank" class="card">
             <img src="boykisshero.png" alt="Workshop">
             <h2 id="wsTitle">Workshop</h2>
@@ -235,17 +272,30 @@
     <audio loop>
         <source src="nerd.mp3" type="audio/mpeg">
     </audio>
+
     <script>
         (function() {
             var audio = document.querySelector('audio');
-            if (audio) {
-                audio.play().catch(function() {
-                    document.addEventListener('click', function playOnClick() {
-                        audio.play();
-                        document.removeEventListener('click', playOnClick);
-                    }, { once: true });
-                });
+            var slider = document.getElementById('volumeSlider');
+            if (!audio || !slider) return;
+            var savedVolume = localStorage.getItem('siteVolume');
+            if (savedVolume !== null) {
+                audio.volume = parseFloat(savedVolume);
+                slider.value = savedVolume;
+            } else {
+                audio.volume = 0.5;
+                slider.value = 0.5;
             }
+            slider.addEventListener('input', function() {
+                audio.volume = parseFloat(this.value);
+                localStorage.setItem('siteVolume', this.value);
+            });
+            audio.play().catch(function() {
+                document.addEventListener('click', function playOnClick() {
+                    audio.play();
+                    document.removeEventListener('click', playOnClick);
+                }, { once: true });
+            });
         })();
 
         (function() {
@@ -303,7 +353,8 @@
             };
 
             var currentLang = localStorage.getItem('siteLang') || 'ru';
-            var toggleBtn = document.getElementById('langToggle');
+            var langRu = document.getElementById('langRu');
+            var langEn = document.getElementById('langEn');
 
             function setLanguage(lang) {
                 var t = translations[lang];
@@ -330,14 +381,22 @@
                 document.getElementById('wsSubs').textContent = t.wsSubs;
                 document.getElementById('backLink').textContent = t.back;
                 document.getElementById('disclaimer').innerHTML = t.disclaimer.replace(/\n/g, '<br>');
-                toggleBtn.textContent = lang === 'ru' ? 'EN' : 'RU';
+                if (lang === 'ru') {
+                    langRu.classList.add('active');
+                    langEn.classList.remove('active');
+                } else {
+                    langEn.classList.add('active');
+                    langRu.classList.remove('active');
+                }
                 localStorage.setItem('siteLang', lang);
+                currentLang = lang;
             }
 
-            toggleBtn.addEventListener('click', function() {
-                var nextLang = currentLang === 'ru' ? 'en' : 'ru';
-                currentLang = nextLang;
-                setLanguage(nextLang);
+            langRu.addEventListener('click', function() {
+                if (currentLang !== 'ru') setLanguage('ru');
+            });
+            langEn.addEventListener('click', function() {
+                if (currentLang !== 'en') setLanguage('en');
             });
 
             setLanguage(currentLang);

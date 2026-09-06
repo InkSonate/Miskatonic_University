@@ -54,6 +54,28 @@
         }
         .lang-option:hover:not(.active) { color: #fff; }
         .lang-option:focus { outline: none; }
+
+        .volume-control {
+            position: fixed;
+            top: 70px;
+            right: 15px;
+            z-index: 1000;
+            background: rgba(0,0,0,0.6);
+            backdrop-filter: blur(4px);
+            padding: 6px 12px;
+            border-radius: 30px;
+            border: 1px solid rgba(255,255,255,0.2);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .volume-control span { color: #ffe484; font-size: 1.2rem; }
+        .volume-control input[type="range"] { width: 80px; accent-color: #ffd700; background: transparent; cursor: pointer; }
+        @media (max-width: 700px) {
+            .volume-control { top: 60px; right: 10px; padding: 4px 8px; }
+            .volume-control input[type="range"] { width: 60px; }
+        }
+
         .header {
             display: flex;
             align-items: center;
@@ -124,6 +146,8 @@
         @media (max-width: 700px) {
             .lang-switch { top: 10px; right: 10px; padding: 3px 8px; }
             .lang-option { font-size: 0.9rem; padding: 3px 10px; }
+            .volume-control { top: 55px; right: 8px; }
+            .volume-control input[type="range"] { width: 50px; }
             .header img { display: none; }
             .header h1 { font-size: 2.2rem; padding: 8px 20px; }
             .content { padding: 20px; margin: 10px; }
@@ -139,6 +163,11 @@
     <div class="lang-switch">
         <button class="lang-option active" data-lang="ru" id="langRu">RU</button>
         <button class="lang-option" data-lang="en" id="langEn">EN</button>
+    </div>
+
+    <div class="volume-control">
+        <span>🔊</span>
+        <input type="range" min="0" max="1" step="0.01" value="0.5" id="volumeSlider">
     </div>
 
     <div class="header">
@@ -166,17 +195,30 @@
     <audio loop>
         <source src="nerd.mp3" type="audio/mpeg">
     </audio>
+
     <script>
         (function() {
             var audio = document.querySelector('audio');
-            if (audio) {
-                audio.play().catch(function() {
-                    document.addEventListener('click', function playOnClick() {
-                        audio.play();
-                        document.removeEventListener('click', playOnClick);
-                    }, { once: true });
-                });
+            var slider = document.getElementById('volumeSlider');
+            if (!audio || !slider) return;
+            var savedVolume = localStorage.getItem('siteVolume');
+            if (savedVolume !== null) {
+                audio.volume = parseFloat(savedVolume);
+                slider.value = savedVolume;
+            } else {
+                audio.volume = 0.5;
+                slider.value = 0.5;
             }
+            slider.addEventListener('input', function() {
+                audio.volume = parseFloat(this.value);
+                localStorage.setItem('siteVolume', this.value);
+            });
+            audio.play().catch(function() {
+                document.addEventListener('click', function playOnClick() {
+                    audio.play();
+                    document.removeEventListener('click', playOnClick);
+                }, { once: true });
+            });
         })();
 
         (function() {
