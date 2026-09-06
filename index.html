@@ -5,14 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Miskatonic University</title>
     <style>
-        /* Сброс отступов */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
 
-        /* Фон на всю страницу */
         body {
             min-height: 100vh;
             background-image: url('professorsanych.png');
@@ -22,26 +20,27 @@
             font-family: 'Patrick Hand', cursive, Arial, sans-serif;
             display: flex;
             flex-direction: column;
-            justify-content: space-between; /* чтобы верх и низ были прижаты к краям */
+            justify-content: space-between;
             align-items: center;
             padding: 20px;
             color: white;
             text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.8);
+            position: relative;
         }
 
-        /* Верхний блок с названием и иконками */
+        /* Верхний блок */
         .header {
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 20px; /* расстояние между элементами */
+            gap: 20px;
             width: 100%;
-            flex-wrap: wrap; /* чтобы на маленьких экранах переносилось */
+            flex-wrap: wrap;
             margin-top: 20px;
         }
 
         .header img {
-            height: 50px; /* размер иконок – подгоните под свой вкус */
+            height: 50px;
             width: auto;
         }
 
@@ -56,9 +55,44 @@
             text-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
         }
 
+        /* Центральный блок с кнопками */
+        .main-center {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .btn {
+            display: inline-block;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(4px);
+            padding: 15px 40px;
+            border-radius: 50px;
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #ffe484;
+            text-decoration: none;
+            text-shadow: 0 0 10px rgba(255, 200, 0, 0.5);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            width: fit-content;
+            min-width: 200px;
+            text-align: center;
+        }
+
+        .btn:hover {
+            background: rgba(255, 215, 0, 0.3);
+            border-color: #ffd700;
+            transform: scale(1.05);
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.4);
+        }
+
         /* Нижний левый блок */
         .bottom-left {
-            align-self: flex-start; /* прижимаем к левому краю */
+            align-self: flex-start;
             display: flex;
             align-items: center;
             gap: 15px;
@@ -70,19 +104,24 @@
         }
 
         .bottom-left img {
-            height: 80px; /* размер гифки – "не совсем мелкая, но и не большая" */
+            height: 80px;
             width: auto;
         }
 
-        .bottom-left span {
+        .bottom-left a {
             font-size: 2rem;
             font-weight: bold;
-            letter-spacing: 2px;
             color: #ffe484;
+            text-decoration: none;
             text-shadow: 0 0 10px rgba(255, 200, 0, 0.5);
+            transition: color 0.3s;
         }
 
-        /* Адаптивность для телефонов */
+        .bottom-left a:hover {
+            color: #ffffff;
+            text-decoration: underline;
+        }
+
         @media (max-width: 700px) {
             .header h1 {
                 font-size: 2.2rem;
@@ -96,12 +135,16 @@
                 align-items: flex-start;
                 gap: 5px;
             }
-            .bottom-left span {
+            .bottom-left a {
                 font-size: 1.5rem;
+            }
+            .btn {
+                font-size: 1.3rem;
+                padding: 12px 25px;
+                min-width: 150px;
             }
         }
     </style>
-    <!-- Подключаем шрифт (если хотите смешной) – можно убрать, если не нужен -->
     <link href="https://fonts.googleapis.com/css2?family=Patrick+Hand&display=swap" rel="stylesheet">
 </head>
 <body>
@@ -113,11 +156,24 @@
         <img src="znidosquid.png" alt="znidosquid right">
     </div>
 
-    <!-- Нижняя левая часть -->
+    <!-- Центр – три кнопки -->
+    <div class="main-center">
+        <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" target="_blank" class="btn">Nothing here yet</a>
+        <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" target="_blank" class="btn">Nothing here yet</a>
+        <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" target="_blank" class="btn">Nothing here yet</a>
+    </div>
+
+    <!-- Нижняя левая часть – теперь ссылка на Telegram -->
     <div class="bottom-left">
         <img src="waiting1.gif" alt="waiting">
-        <span>Nothing here yet</span>
+        <a href="https://t.me/MiskatonicTeaParty" target="_blank">t.me/MiskatonicTeaParty</a>
     </div>
+
+    <!-- Аудиоплеер (автозапуск, повтор) -->
+    <audio autoplay loop>
+        <source src="nerd.mp3" type="audio/mpeg">
+        Ваш браузер не поддерживает аудио.
+    </audio>
 
 </body>
 </html>
