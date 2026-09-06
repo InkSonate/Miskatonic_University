@@ -95,15 +95,24 @@
             transform: scale(1.05);
             box-shadow: 0 0 20px rgba(255,215,0,0.4);
         }
+        /* Нижняя строка: Telegram слева, дисклеймер справа */
+        .footer-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            margin-top: 20px;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
         .bottom-left {
-            align-self: flex-start;
             display: flex;
             align-items: center;
             gap: 15px;
             background: #7b7070;
             padding: 10px 20px;
             border-radius: 20px;
-            margin-bottom: 30px;
+            flex-shrink: 0;
         }
         .bottom-left img { height: 80px; width: auto; }
         .bottom-left a {
@@ -116,37 +125,43 @@
         }
         .bottom-left a:hover { color: #fff; text-decoration: underline; }
         .disclaimer {
-            margin-top: 30px;
             font-size: 0.7rem;
             color: rgba(255,255,255,0.5);
-            text-align: center;
-            max-width: 500px;
+            text-align: right;
+            max-width: 400px;
             text-shadow: none;
             background: rgba(0,0,0,0.3);
             padding: 8px 15px;
             border-radius: 10px;
+            flex-shrink: 1;
         }
         @media (max-width: 700px) {
             .lang-switch { top: 10px; right: 10px; font-size: 1rem; padding: 5px 12px; }
             .header img { display: none; }
             .header h1 { font-size: 2.2rem; padding: 8px 20px; letter-spacing: 2px; }
             .btn { width: 90%; max-width: 350px; min-width: unset; font-size: 1.6rem; padding: 14px 20px; border-radius: 30px; }
+            .footer-row {
+                flex-direction: column;
+                align-items: center;
+                gap: 10px;
+            }
             .bottom-left {
-                align-self: center;
                 width: 90%;
                 max-width: 350px;
                 justify-content: center;
                 padding: 12px 20px;
                 gap: 10px;
                 border-radius: 30px;
-                flex-direction: row;
                 flex-wrap: nowrap;
-                margin-bottom: 20px;
             }
             .bottom-left img { height: 40px; }
             .bottom-left a { font-size: 1.4rem; white-space: nowrap; }
-            .main-center { gap: 15px; }
-            .disclaimer { font-size: 0.6rem; padding: 6px 10px; }
+            .disclaimer {
+                text-align: center;
+                max-width: 90%;
+                font-size: 0.6rem;
+                padding: 6px 10px;
+            }
         }
     </style>
     <link href="https://fonts.googleapis.com/css2?family=Patrick+Hand&display=swap" rel="stylesheet">
@@ -167,14 +182,16 @@
         <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" target="_blank" class="btn" id="btnRick">Nothing here yet</a>
     </div>
 
-    <div class="bottom-left">
-        <img src="waiting.gif" alt="waiting">
-        <a href="https://t.me/MiskatonicTeaParty" target="_blank" id="tgLink">t.me/MiskatonicTeaParty</a>
-    </div>
-
-    <div class="disclaimer" id="disclaimer">
-        Все использованные изображения и материалы принадлежат их законным владельцам.<br>
-        Сайт создан в развлекательных и пародийных целях, не является коммерческим проектом.
+    <!-- Новая нижняя строка: Telegram слева, дисклеймер справа -->
+    <div class="footer-row">
+        <div class="bottom-left">
+            <img src="waiting.gif" alt="waiting">
+            <a href="https://t.me/MiskatonicTeaParty" target="_blank" id="tgLink">t.me/MiskatonicTeaParty</a>
+        </div>
+        <div class="disclaimer" id="disclaimer">
+            Все использованные изображения и материалы принадлежат их законным владельцам.<br>
+            Сайт создан в развлекательных и пародийных целях, не является коммерческим проектом.
+        </div>
     </div>
 
     <audio loop>
@@ -196,12 +213,11 @@
 
         // Переключение языка
         (function() {
-            // Тексты для двух языков с русскими переводами кнопок
             var translations = {
                 ru: {
                     title: 'Miskatonic University',
                     btnAbout: 'О нас',
-                    btnSteam: 'Мы и Steam',
+                    btnSteam: 'Мы в Стим',
                     btnRick: 'Пока ничего',
                     tg: 't.me/MiskatonicTeaParty',
                     disclaimer: 'Все использованные изображения и материалы принадлежат их законным владельцам.\nСайт создан в развлекательных и пародийных целях, не является коммерческим проектом.'
@@ -237,7 +253,6 @@
                 setLanguage(nextLang);
             });
 
-            // Устанавливаем язык при загрузке
             setLanguage(currentLang);
         })();
     </script>
