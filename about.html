@@ -5,12 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>About Us – Miskatonic</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             min-height: 100vh;
             background-image: url('professorsanych.png');
@@ -20,14 +15,11 @@
             font-family: 'Patrick Hand', cursive, Arial, sans-serif;
             display: flex;
             flex-direction: column;
-            justify-content: center;
             align-items: center;
-            padding: 40px 20px;
+            padding: 20px;
             color: white;
-            text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.8);
-            text-align: center;
+            text-shadow: 2px 2px 6px rgba(0,0,0,0.8);
         }
-
         .header {
             display: flex;
             align-items: center;
@@ -35,78 +27,73 @@
             gap: 20px;
             width: 100%;
             flex-wrap: wrap;
+            margin-top: 20px;
             margin-bottom: 30px;
         }
-
-        .header img {
-            height: 50px;
-            width: auto;
-        }
-
+        .header img { height: 50px; width: auto; }
         .header h1 {
             font-size: 3.5rem;
             font-weight: normal;
             letter-spacing: 4px;
-            background: rgba(0, 0, 0, 0.4);
+            background: rgba(0,0,0,0.4);
             padding: 10px 30px;
             border-radius: 30px;
             backdrop-filter: blur(2px);
-            text-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+            text-shadow: 0 0 20px rgba(255,255,255,0.3);
         }
-
         .content {
             max-width: 700px;
-            background: rgba(0, 0, 0, 0.5);
+            background: rgba(0,0,0,0.5);
             backdrop-filter: blur(4px);
             padding: 30px 40px;
             border-radius: 30px;
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255,255,255,0.2);
             margin: 20px 0;
+            text-align: center;
         }
-
         .content p {
             font-size: 1.8rem;
             line-height: 1.6;
             color: #ffe484;
-            text-shadow: 0 0 10px rgba(255, 200, 0, 0.3);
+            text-shadow: 0 0 10px rgba(255,200,0,0.3);
         }
-
         .back-link {
-            margin-top: 30px;
+            margin-top: 20px;
             display: inline-block;
-            background: rgba(0, 0, 0, 0.6);
+            background: rgba(0,0,0,0.6);
             backdrop-filter: blur(4px);
             padding: 12px 35px;
             border-radius: 50px;
             font-size: 1.6rem;
             color: #ffe484;
             text-decoration: none;
-            border: 2px solid rgba(255, 255, 255, 0.3);
+            border: 2px solid rgba(255,255,255,0.3);
             transition: all 0.3s ease;
         }
-
         .back-link:hover {
-            background: rgba(255, 215, 0, 0.3);
+            background: rgba(255,215,0,0.3);
             border-color: #ffd700;
             transform: scale(1.05);
-            box-shadow: 0 0 20px rgba(255, 215, 0, 0.4);
+            box-shadow: 0 0 20px rgba(255,215,0,0.4);
         }
-
+        .disclaimer {
+            margin-top: 30px;
+            font-size: 0.7rem;
+            color: rgba(255,255,255,0.5);
+            text-align: center;
+            max-width: 500px;
+            text-shadow: none;
+            background: rgba(0,0,0,0.3);
+            padding: 8px 15px;
+            border-radius: 10px;
+        }
         @media (max-width: 700px) {
-            .header h1 {
-                font-size: 2.2rem;
-                padding: 5px 15px;
-            }
-            .header img {
-                height: 35px;
-            }
-            .content p {
-                font-size: 1.3rem;
-            }
-            .back-link {
-                font-size: 1.2rem;
-                padding: 10px 20px;
-            }
+            .header img { display: none; }
+            .header h1 { font-size: 2.2rem; padding: 8px 20px; }
+            .content { padding: 20px; margin: 10px; }
+            .content p { font-size: 1.3rem; }
+            .back-link { font-size: 1.2rem; padding: 10px 20px; width: 90%; max-width: 300px; text-align: center; }
+            .disclaimer { font-size: 0.6rem; padding: 6px 10px; }
         }
     </style>
     <link href="https://fonts.googleapis.com/css2?family=Patrick+Hand&display=swap" rel="stylesheet">
@@ -130,10 +117,26 @@
 
     <a href="index.html" class="back-link">← Back to main</a>
 
-    <!-- Музыка – оставляем ту же, чтобы играла и здесь -->
-    <audio autoplay loop>
+    <div class="disclaimer">
+        Все использованные изображения и материалы принадлежат их законным владельцам.<br>
+        Сайт создан в развлекательных и пародийных целях, не является коммерческим проектом.
+    </div>
+
+    <audio loop>
         <source src="nerd.mp3" type="audio/mpeg">
     </audio>
-
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var audio = document.querySelector('audio');
+            if (audio) {
+                audio.play().catch(function() {
+                    document.addEventListener('click', function playOnClick() {
+                        audio.play();
+                        document.removeEventListener('click', playOnClick);
+                    }, { once: true });
+                });
+            }
+        });
+    </script>
 </body>
 </html>
