@@ -3,32 +3,121 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MiskatonicTeaParty</title>
-    <link href="https://fonts.googleapis.com/css2?family=Patrick+Hand&display=swap" rel="stylesheet">
+    <title>Miskatonic University</title>
     <style>
+        /* Сброс отступов */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Фон на всю страницу */
         body {
-            font-family: "Patrick Hand", cursive;
-            text-align: center;
-            padding: 50px;
-            background-color: #ffb6c1;
-            color: #3e2723;
+            min-height: 100vh;
+            background-image: url('professorsanych.png');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            font-family: 'Patrick Hand', cursive, Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between; /* чтобы верх и низ были прижаты к краям */
+            align-items: center;
+            padding: 20px;
+            color: white;
+            text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.8);
         }
-        h1 {
-            font-size: 4em;
-            color: #8b0000;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+
+        /* Верхний блок с названием и иконками */
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 20px; /* расстояние между элементами */
+            width: 100%;
+            flex-wrap: wrap; /* чтобы на маленьких экранах переносилось */
+            margin-top: 20px;
         }
-        a {
-            color: #ad1457;
-            text-decoration: none;
+
+        .header img {
+            height: 50px; /* размер иконок – подгоните под свой вкус */
+            width: auto;
+        }
+
+        .header h1 {
+            font-size: 3.5rem;
+            font-weight: normal;
+            letter-spacing: 4px;
+            background: rgba(0, 0, 0, 0.4);
+            padding: 10px 30px;
+            border-radius: 30px;
+            backdrop-filter: blur(2px);
+            text-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+        }
+
+        /* Нижний левый блок */
+        .bottom-left {
+            align-self: flex-start; /* прижимаем к левому краю */
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            background: rgba(0, 0, 0, 0.4);
+            padding: 10px 20px;
+            border-radius: 20px;
+            backdrop-filter: blur(2px);
+            margin-bottom: 30px;
+        }
+
+        .bottom-left img {
+            height: 80px; /* размер гифки – "не совсем мелкая, но и не большая" */
+            width: auto;
+        }
+
+        .bottom-left span {
+            font-size: 2rem;
             font-weight: bold;
+            letter-spacing: 2px;
+            color: #ffe484;
+            text-shadow: 0 0 10px rgba(255, 200, 0, 0.5);
         }
-        a:hover {
-            text-decoration: underline;
+
+        /* Адаптивность для телефонов */
+        @media (max-width: 700px) {
+            .header h1 {
+                font-size: 2.2rem;
+                padding: 5px 15px;
+            }
+            .header img {
+                height: 35px;
+            }
+            .bottom-left {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 5px;
+            }
+            .bottom-left span {
+                font-size: 1.5rem;
+            }
         }
     </style>
+    <!-- Подключаем шрифт (если хотите смешной) – можно убрать, если не нужен -->
+    <link href="https://fonts.googleapis.com/css2?family=Patrick+Hand&display=swap" rel="stylesheet">
 </head>
 <body>
-    <h1>testing dat shit</h1>
+
+    <!-- Верхняя часть -->
+    <div class="header">
+        <img src="znidosquid.png" alt="znidosquid left">
+        <h1>Miskatonic University</h1>
+        <img src="znidosquid.png" alt="znidosquid right">
+    </div>
+
+    <!-- Нижняя левая часть -->
+    <div class="bottom-left">
+        <img src="waiting1.gif" alt="waiting">
+        <span>Nothing here yet</span>
+    </div>
+
 </body>
 </html>
