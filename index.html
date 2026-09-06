@@ -22,7 +22,7 @@
             text-shadow: 2px 2px 6px rgba(0,0,0,0.8);
             position: relative;
         }
-        /* Переключатель языков (две кнопки) */
+        /* Переключатель языков */
         .lang-switch {
             position: fixed;
             top: 15px;
@@ -116,7 +116,7 @@
             background: rgba(255,0,0,0.5);
         }
 
-        /* Блок галереи (изначально скрыт) */
+        /* Галерея */
         .gallery-container {
             display: none;
             flex-direction: column;
@@ -190,7 +190,6 @@
             box-shadow: 0 0 10px #ffd700;
         }
 
-        /* Нижняя строка */
         .footer-row {
             display: flex;
             justify-content: space-between;
@@ -269,7 +268,6 @@
 </head>
 <body>
 
-    <!-- Переключатель языков -->
     <div class="lang-switch">
         <button class="lang-option active" data-lang="ru" id="langRu">RU</button>
         <button class="lang-option" data-lang="en" id="langEn">EN</button>
@@ -284,13 +282,10 @@
     <div class="main-center">
         <a href="about.html" class="btn" id="btnAbout">About Us</a>
         <a href="steam.html" class="btn" id="btnSteam">We n Steam</a>
-        <!-- Третья кнопка - открывает галерею -->
-        <button class="btn" id="btnGallery">Our Story</button>
-        <!-- Четвёртая кнопка - рикролл -->
+        <button class="btn" id="btnGallery">Галерея</button>
         <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" target="_blank" class="btn btn-rickroll" id="btnRickroll">Rickroll</a>
     </div>
 
-    <!-- Блок галереи -->
     <div class="gallery-container" id="galleryContainer">
         <div class="gallery-slide">
             <img id="galleryImage" src="ourstory1.png" alt="our story">
@@ -338,13 +333,11 @@
 
         // --- Галерея ---
         (function() {
-            // Данные слайдов (изображения и подписи на двух языках)
             var slides = [
                 { src: 'ourstory1.png', caption: { ru: '1488 год', en: '1488 year' } },
                 { src: 'ourstory2.png', caption: { ru: '1984 год', en: '1984 year' } },
                 { src: 'ourstory3.png', caption: { ru: '6967 год', en: '6967 year' } }
             ];
-
             var currentIndex = 0;
             var container = document.getElementById('galleryContainer');
             var galleryImage = document.getElementById('galleryImage');
@@ -355,33 +348,27 @@
             var galleryBtn = document.getElementById('btnGallery');
             var isOpen = false;
 
-            // Функция обновления слайда
             function updateSlide(index) {
                 var slide = slides[index];
                 galleryImage.src = slide.src;
-                // Обновить подпись в зависимости от текущего языка
                 var currentLang = localStorage.getItem('siteLang') || 'ru';
                 galleryCaption.textContent = slide.caption[currentLang] || slide.caption.ru;
-                // Обновить индикаторы
                 var dots = indicators.querySelectorAll('span');
                 dots.forEach(function(dot, i) {
                     dot.classList.toggle('active', i === index);
                 });
             }
 
-            // Переключение галереи (открыть/закрыть)
             function toggleGallery() {
                 isOpen = !isOpen;
                 if (isOpen) {
                     container.classList.add('open');
-                    // При открытии показываем первый слайд (если еще не было)
                     updateSlide(currentIndex);
                 } else {
                     container.classList.remove('open');
                 }
             }
 
-            // События для кнопок навигации
             prevBtn.addEventListener('click', function(e) {
                 e.stopPropagation();
                 if (!isOpen) return;
@@ -396,18 +383,11 @@
                 updateSlide(currentIndex);
             });
 
-            // Клик по кнопке "Our Story"
             galleryBtn.addEventListener('click', function(e) {
                 e.preventDefault();
                 toggleGallery();
             });
 
-            // Обновлять подпись при смене языка (если галерея открыта)
-            // Мы будем вызывать updateSlide при переключении языка, если галерея открыта
-            // Для этого добавим в функцию переключения языка вызов.
-            // Но лучше сделать отдельную функцию, которую будем вызывать из setLanguage.
-
-            // Сделаем функцию доступной глобально
             window.updateGalleryCaption = function(lang) {
                 if (isOpen) {
                     var slide = slides[currentIndex];
@@ -415,7 +395,6 @@
                 }
             };
 
-            // Инициализация индикаторов
             function initIndicators() {
                 indicators.innerHTML = '';
                 slides.forEach(function(_, i) {
@@ -425,8 +404,6 @@
                 });
             }
             initIndicators();
-
-            // Начальное состояние (закрыто)
             container.classList.remove('open');
             currentIndex = 0;
             updateSlide(0);
@@ -439,7 +416,7 @@
                     title: 'Miskatonic University',
                     btnAbout: 'О нас',
                     btnSteam: 'Мы в Стим',
-                    btnGallery: 'Наша история',
+                    btnGallery: 'Галерея',
                     btnRickroll: 'Рикролл',
                     tg: 't.me/MiskatonicTeaParty',
                     disclaimer: 'Все использованные изображения и материалы принадлежат их законным владельцам.\nСайт создан в развлекательных и пародийных целях, не является коммерческим проектом.'
@@ -448,7 +425,7 @@
                     title: 'Miskatonic University',
                     btnAbout: 'About Us',
                     btnSteam: 'We n Steam',
-                    btnGallery: 'Our Story',
+                    btnGallery: 'Gallery',
                     btnRickroll: 'Rickroll',
                     tg: 't.me/MiskatonicTeaParty',
                     disclaimer: 'All images and materials used belong to their respective owners.\nThis site is for entertainment and parody purposes only, and is not a commercial project.'
@@ -468,7 +445,6 @@
                 document.getElementById('btnRickroll').textContent = t.btnRickroll;
                 document.getElementById('tgLink').textContent = t.tg;
                 document.getElementById('disclaimer').innerHTML = t.disclaimer.replace(/\n/g, '<br>');
-                // Обновить активную кнопку языка
                 if (lang === 'ru') {
                     langRu.classList.add('active');
                     langEn.classList.remove('active');
@@ -478,8 +454,6 @@
                 }
                 localStorage.setItem('siteLang', lang);
                 currentLang = lang;
-
-                // Обновить подпись в галерее, если она открыта
                 if (window.updateGalleryCaption) {
                     window.updateGalleryCaption(lang);
                 }
@@ -492,7 +466,6 @@
                 if (currentLang !== 'en') setLanguage('en');
             });
 
-            // Установить начальный язык
             setLanguage(currentLang);
         })();
     </script>
