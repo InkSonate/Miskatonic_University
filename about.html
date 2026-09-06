@@ -1,319 +1,327 @@
-<!DOCTYPE html>
-<html lang="ru">
+﻿<!DOCTYPE html>
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>About Us – Miskatonic</title>
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body {
-            min-height: 100vh;
-            background-image: url('professorsanych.png');
-            background-size: cover;
-            background-position: center;
-            background-attachment: fixed;
-            font-family: 'Patrick Hand', cursive, Arial, sans-serif;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 20px;
-            color: white;
-            text-shadow: 2px 2px 6px rgba(0,0,0,0.8);
-            position: relative;
-        }
-        .lang-switch {
-            position: fixed;
-            top: 15px;
-            right: 15px;
-            display: flex;
-            gap: 5px;
-            background: rgba(0,0,0,0.6);
-            backdrop-filter: blur(4px);
-            padding: 5px 10px;
-            border-radius: 30px;
-            border: 2px solid rgba(255,255,255,0.2);
-            z-index: 1000;
-        }
-        .lang-option {
-            padding: 4px 12px;
-            border-radius: 20px;
-            font-size: 1.1rem;
-            font-weight: bold;
-            color: #aaa;
-            cursor: pointer;
-            transition: all 0.3s;
-            font-family: 'Patrick Hand', cursive;
-            background: transparent;
-            border: none;
-            text-shadow: none;
-        }
-        .lang-option.active {
-            background: #ffe484;
-            color: #1a1a1a;
-            box-shadow: 0 0 15px rgba(255,215,0,0.4);
-        }
-        .lang-option:hover:not(.active) { color: #fff; }
-        .lang-option:focus { outline: none; }
-
-        .volume-control {
-            position: fixed;
-            top: 70px;
-            right: 15px;
-            z-index: 1000;
-            background: rgba(0,0,0,0.6);
-            backdrop-filter: blur(4px);
-            padding: 6px 12px;
-            border-radius: 30px;
-            border: 1px solid rgba(255,255,255,0.2);
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        .volume-control span { color: #ffe484; font-size: 1.2rem; }
-        .volume-control input[type="range"] { width: 80px; accent-color: #ffd700; background: transparent; cursor: pointer; }
-        @media (max-width: 700px) {
-            .volume-control { top: 60px; right: 10px; padding: 4px 8px; }
-            .volume-control input[type="range"] { width: 60px; }
-        }
-
-        .header {
-            display: flex;
-            align-items: center;
-            justify-content: flex-start;
-            gap: 20px;
-            width: 100%;
-            flex-wrap: wrap;
-            margin-top: 20px;
-            margin-bottom: 30px;
-        }
-        .header h1 {
-            font-size: 3.5rem;
-            font-weight: normal;
-            letter-spacing: 4px;
-            text-shadow: 0 0 20px rgba(255,255,255,0.3);
-            margin: 0;
-        }
-        .header .header-icon {
-            height: 70px;
-            width: auto;
-            order: -1;
-        }
-
-        .content {
-            max-width: 700px;
-            background: rgba(0,0,0,0.5);
-            backdrop-filter: blur(4px);
-            padding: 30px 40px;
-            border-radius: 30px;
-            border: 1px solid rgba(255,255,255,0.2);
-            margin: 20px 0;
-            text-align: center;
-        }
-        .content p {
-            font-size: 1.8rem;
-            line-height: 1.6;
-            color: #ffe484;
-            text-shadow: 0 0 10px rgba(255,200,0,0.3);
-        }
-
-        .btn {
-            display: inline-block;
-            padding: 18px 50px;
-            border-radius: 8px;
-            font-size: 1.8rem;
-            font-weight: bold;
-            color: #ffe484;
-            text-decoration: none;
-            text-shadow: 0 0 10px rgba(255, 200, 0, 0.3);
-            border: none;
-            background: linear-gradient(145deg, rgba(139, 128, 128, 0.85), rgba(107, 96, 96, 0.85));
-            backdrop-filter: blur(4px);
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.15);
-            transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-            cursor: pointer;
-            width: fit-content;
-            min-width: 220px;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-            letter-spacing: 0.5px;
-        }
-        .btn::after {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(255, 215, 0, 0.15) 0%, transparent 60%);
-            opacity: 0;
-            transition: opacity 0.5s;
-            pointer-events: none;
-        }
-        .btn:hover::after {
-            opacity: 1;
-        }
-        .btn:hover {
-            transform: translateY(-3px) scale(1.02);
-            box-shadow: 0 8px 30px rgba(255, 215, 0, 0.3), 0 0 30px rgba(255, 215, 0, 0.1);
-            background: linear-gradient(145deg, rgba(155, 144, 144, 0.9), rgba(123, 112, 112, 0.9));
-            text-shadow: 0 0 20px rgba(255, 200, 0, 0.5);
-        }
-        .btn:active {
-            transform: scale(0.96) translateY(2px);
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
-        }
-
-        .disclaimer {
-            margin-top: 30px;
-            font-size: 0.7rem;
-            color: rgba(255,255,255,0.5);
-            text-align: center;
-            max-width: 500px;
-            text-shadow: none;
-            background: rgba(0,0,0,0.3);
-            padding: 8px 15px;
-            border-radius: 10px;
-        }
-
-        @media (max-width: 700px) {
-            .lang-switch { top: 10px; right: 10px; padding: 3px 8px; }
-            .lang-option { font-size: 0.9rem; padding: 3px 10px; }
-            .volume-control { top: 55px; right: 8px; }
-            .volume-control input[type="range"] { width: 50px; }
-            .header {
-                justify-content: center;
-            }
-            .header .header-icon { display: none; }
-            .header h1 {
-                font-size: 2.2rem;
-                padding: 0;
-                letter-spacing: 2px;
-            }
-            .content { padding: 20px; margin: 10px; }
-            .content p { font-size: 1.3rem; }
-            .btn {
-                font-size: 1.2rem;
-                padding: 10px 20px;
-                min-width: unset;
-                width: 90%;
-                max-width: 300px;
-                border-radius: 30px;
-                background: linear-gradient(145deg, rgba(139, 128, 128, 0.85), rgba(107, 96, 96, 0.85));
-            }
-            .disclaimer { font-size: 0.6rem; padding: 6px 10px; }
-        }
-    </style>
-    <link href="https://fonts.googleapis.com/css2?family=Patrick+Hand&display=swap" rel="stylesheet">
+	<title>be1.ru</title>
 </head>
 <body>
+<p>&lt;!DOCTYPE html&gt;<br />
+&lt;html lang=&quot;ru&quot;&gt;<br />
+&lt;head&gt;<br />
+&nbsp; &nbsp; &lt;meta charset=&quot;UTF-8&quot;&gt;<br />
+&nbsp; &nbsp; &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot;&gt;<br />
+&nbsp; &nbsp; &lt;title&gt;About Us &ndash; Miskatonic&lt;/title&gt;<br />
+&nbsp; &nbsp; &lt;style&gt;<br />
+&nbsp; &nbsp; &nbsp; &nbsp; * { margin: 0; padding: 0; box-sizing: border-box; }<br />
+&nbsp; &nbsp; &nbsp; &nbsp; body {<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; min-height: 100vh;<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; background-image: url(&#39;professorsanych.png&#39;);<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; background-size: cover;<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; background-position: center;<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; background-attachment: fixed;<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; font-family: &#39;Patrick Hand&#39;, cursive, Arial, sans-serif;<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; display: flex;<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; flex-direction: column;<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; align-items: center;<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; padding: 20px;<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; color: white;<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; text-shadow: 2px 2px 6px rgba(0,0,0,0.8);<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; position: relative;<br />
+&nbsp; &nbsp; &nbsp; &nbsp; }<br />
+&nbsp; &nbsp; &nbsp; &nbsp; .lang-switch {<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; position: fixed;<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; top: 15px;<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; right: 15px;<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; display: flex;<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; gap: 5px;<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; background: rgba(0,0,0,0.6);<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; backdrop-filter: blur(4px);<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; padding: 5px 10px;<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; border-radius: 30px;<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; border: 2px solid rgba(255,255,255,0.2);<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; z-index: 1000;<br />
+&nbsp; &nbsp; &nbsp; &nbsp; }<br />
+&nbsp; &nbsp; &nbsp; &nbsp; .lang-option {<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; padding: 4px 12px;<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; border-radius: 20px;<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; font-size: 1.1rem;<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; font-weight: bold;<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; color: #aaa;<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; cursor: pointer;<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; transition: all 0.3s;<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; font-family: &#39;Patrick Hand&#39;, cursive;<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; background: transparent;<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; border: none;<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; text-shadow: none;<br />
+&nbsp; &nbsp; &nbsp; &nbsp; }<br />
+&nbsp; &nbsp; &nbsp; &nbsp; .lang-option.active {<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; background: #ffe484;<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; color: #1a1a1a;<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; box-shadow: 0 0 15px rgba(255,215,0,0.4);<br />
+&nbsp; &nbsp; &nbsp; &nbsp; }<br />
+&nbsp; &nbsp; &nbsp; &nbsp; .lang-option:hover:not(.active) { color: #fff; }<br />
+&nbsp; &nbsp; &nbsp; &nbsp; .lang-option:focus { outline: none; }</p>
 
-    <div class="lang-switch">
-        <button class="lang-option active" data-lang="ru" id="langRu">RU</button>
-        <button class="lang-option" data-lang="en" id="langEn">EN</button>
-    </div>
+<p>&nbsp; &nbsp; &nbsp; &nbsp; .volume-control {<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; position: fixed;<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; top: 70px;<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; right: 15px;<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; z-index: 1000;<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; background: rgba(0,0,0,0.6);<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; backdrop-filter: blur(4px);<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; padding: 6px 12px;<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; border-radius: 30px;<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; border: 1px solid rgba(255,255,255,0.2);<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; display: flex;<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; align-items: center;<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; gap: 8px;<br />
+&nbsp; &nbsp; &nbsp; &nbsp; }<br />
+&nbsp; &nbsp; &nbsp; &nbsp; .volume-control span { color: #ffe484; font-size: 1.2rem; }<br />
+&nbsp; &nbsp; &nbsp; &nbsp; .volume-control input[type=&quot;range&quot;] { width: 80px; accent-color: #ffd700; background: transparent; cursor: pointer; }<br />
+&nbsp; &nbsp; &nbsp; &nbsp; @media (max-width: 700px) {<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; .volume-control { top: 60px; right: 10px; padding: 4px 8px; }<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; .volume-control input[type=&quot;range&quot;] { width: 60px; }<br />
+&nbsp; &nbsp; &nbsp; &nbsp; }</p>
 
-    <div class="volume-control">
-        <span>🔊</span>
-        <input type="range" min="0" max="1" step="0.01" value="0.5" id="volumeSlider">
-    </div>
+<p>&nbsp; &nbsp; &nbsp; &nbsp; .header {<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; display: flex;<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; align-items: center;<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; justify-content: flex-start;<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; gap: 20px;<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; width: 100%;<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; flex-wrap: wrap;<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; margin-top: 20px;<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; margin-bottom: 30px;<br />
+&nbsp; &nbsp; &nbsp; &nbsp; }<br />
+&nbsp; &nbsp; &nbsp; &nbsp; .header h1 {<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; font-size: 3.5rem;<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; font-weight: normal;<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; letter-spacing: 4px;<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; text-shadow: 0 0 20px rgba(255,255,255,0.3);<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; margin: 0;<br />
+&nbsp; &nbsp; &nbsp; &nbsp; }<br />
+&nbsp; &nbsp; &nbsp; &nbsp; .header .header-icon {<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; height: 70px;<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; width: auto;<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; order: -1;<br />
+&nbsp; &nbsp; &nbsp; &nbsp; }</p>
 
-    <div class="header">
-        <img src="znidosquid.png" alt="znidosquid" class="header-icon">
-        <h1 id="pageTitle">About Us</h1>
-    </div>
+<p>&nbsp; &nbsp; &nbsp; &nbsp; .content {<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; max-width: 700px;<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; background: rgba(0,0,0,0.5);<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; backdrop-filter: blur(4px);<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; padding: 30px 40px;<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; border-radius: 30px;<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; border: 1px solid rgba(255,255,255,0.2);<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; margin: 20px 0;<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; text-align: center;<br />
+&nbsp; &nbsp; &nbsp; &nbsp; }<br />
+&nbsp; &nbsp; &nbsp; &nbsp; .content p {<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; font-size: 1.8rem;<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; line-height: 1.6;<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; color: #ffe484;<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; text-shadow: 0 0 10px rgba(255,200,0,0.3);<br />
+&nbsp; &nbsp; &nbsp; &nbsp; }</p>
 
-    <div class="content">
-        <p id="aboutText">
-            We r da group of "professors" of gr8 scince called "shitpost".<br>
-            The princess Giselle n 2 other guys doing some bshit in da internet and thats all.<br>
-            Literally.<br>
-            On da mein page ya can cy aur telegram.
-        </p>
-    </div>
+<p>&nbsp; &nbsp; &nbsp; &nbsp; .btn {<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; display: inline-block;<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; padding: 18px 50px;<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; border-radius: 8px;<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; font-size: 1.8rem;<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; font-weight: bold;<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; color: #ffe484;<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; text-decoration: none;<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; text-shadow: 0 0 10px rgba(255, 200, 0, 0.3);<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; border: none;<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; background: linear-gradient(145deg, rgba(139, 128, 128, 0.85), rgba(107, 96, 96, 0.85));<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; backdrop-filter: blur(4px);<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.15);<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; cursor: pointer;<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; width: fit-content;<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; min-width: 220px;<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; text-align: center;<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; position: relative;<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; overflow: hidden;<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; letter-spacing: 0.5px;<br />
+&nbsp; &nbsp; &nbsp; &nbsp; }<br />
+&nbsp; &nbsp; &nbsp; &nbsp; .btn::after {<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; content: &#39;&#39;;<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; position: absolute;<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; top: -50%;<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; left: -50%;<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; width: 200%;<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; height: 200%;<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; background: radial-gradient(circle, rgba(255, 215, 0, 0.15) 0%, transparent 60%);<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; opacity: 0;<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; transition: opacity 0.5s;<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; pointer-events: none;<br />
+&nbsp; &nbsp; &nbsp; &nbsp; }<br />
+&nbsp; &nbsp; &nbsp; &nbsp; .btn:hover::after {<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; opacity: 1;<br />
+&nbsp; &nbsp; &nbsp; &nbsp; }<br />
+&nbsp; &nbsp; &nbsp; &nbsp; .btn:hover {<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; transform: translateY(-3px) scale(1.02);<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; box-shadow: 0 8px 30px rgba(255, 215, 0, 0.3), 0 0 30px rgba(255, 215, 0, 0.1);<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; background: linear-gradient(145deg, rgba(155, 144, 144, 0.9), rgba(123, 112, 112, 0.9));<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; text-shadow: 0 0 20px rgba(255, 200, 0, 0.5);<br />
+&nbsp; &nbsp; &nbsp; &nbsp; }<br />
+&nbsp; &nbsp; &nbsp; &nbsp; .btn:active {<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; transform: scale(0.96) translateY(2px);<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);<br />
+&nbsp; &nbsp; &nbsp; &nbsp; }</p>
 
-    <a href="index.html" class="btn" id="backLink">← Back to main</a>
+<p>&nbsp; &nbsp; &nbsp; &nbsp; .disclaimer {<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; margin-top: 30px;<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; font-size: 0.7rem;<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; color: rgba(255,255,255,0.5);<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; text-align: center;<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; max-width: 500px;<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; text-shadow: none;<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; background: rgba(0,0,0,0.3);<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; padding: 8px 15px;<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; border-radius: 10px;<br />
+&nbsp; &nbsp; &nbsp; &nbsp; }</p>
 
-    <div class="disclaimer" id="disclaimer">
-        Все использованные изображения и материалы принадлежат их законным владельцам.<br>
-        Сайт создан в развлекательных и пародийных целях, не является коммерческим проектом.
-    </div>
+<p>&nbsp; &nbsp; &nbsp; &nbsp; @media (max-width: 700px) {<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; .lang-switch { top: 10px; right: 10px; padding: 3px 8px; }<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; .lang-option { font-size: 0.9rem; padding: 3px 10px; }<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; .volume-control { top: 55px; right: 8px; }<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; .volume-control input[type=&quot;range&quot;] { width: 50px; }<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; .header {<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; justify-content: center;<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; }<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; .header .header-icon { display: none; }<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; .header h1 {<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; font-size: 2.2rem;<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; padding: 0;<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; letter-spacing: 2px;<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; }<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; .content { padding: 20px; margin: 10px; }<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; .content p { font-size: 1.3rem; }<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; .btn {<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; font-size: 1.2rem;<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; padding: 10px 20px;<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; min-width: unset;<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; width: 90%;<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; max-width: 300px;<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; border-radius: 30px;<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; background: linear-gradient(145deg, rgba(139, 128, 128, 0.85), rgba(107, 96, 96, 0.85));<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; }<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; .disclaimer { font-size: 0.6rem; padding: 6px 10px; }<br />
+&nbsp; &nbsp; &nbsp; &nbsp; }<br />
+&nbsp; &nbsp; &lt;/style&gt;<br />
+&nbsp; &nbsp; &lt;link href=&quot;https://fonts.googleapis.com/css2?family=Patrick+Hand&amp;display=swap&quot; rel=&quot;stylesheet&quot;&gt;<br />
+&lt;/head&gt;<br />
+&lt;body&gt;</p>
 
-    <audio loop>
-        <source src="nerd.mp3" type="audio/mpeg">
-    </audio>
+<p>&nbsp; &nbsp; &lt;div class=&quot;lang-switch&quot;&gt;<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &lt;button class=&quot;lang-option active&quot; data-lang=&quot;ru&quot; id=&quot;langRu&quot;&gt;RU&lt;/button&gt;<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &lt;button class=&quot;lang-option&quot; data-lang=&quot;en&quot; id=&quot;langEn&quot;&gt;EN&lt;/button&gt;<br />
+&nbsp; &nbsp; &lt;/div&gt;</p>
 
-    <script>
-        (function() {
-            var audio = document.querySelector('audio');
-            var slider = document.getElementById('volumeSlider');
-            if (!audio || !slider) return;
-            var saved = localStorage.getItem('siteVolume');
-            if (saved !== null) {
-                audio.volume = parseFloat(saved);
-                slider.value = saved;
-            } else {
-                audio.volume = 0.5;
-                slider.value = 0.5;
-            }
-            slider.addEventListener('input', function() {
-                audio.volume = parseFloat(this.value);
-                localStorage.setItem('siteVolume', this.value);
-            });
-            audio.play().catch(function() {
-                document.addEventListener('click', function playOnClick() {
-                    audio.play();
-                    document.removeEventListener('click', playOnClick);
-                }, { once: true });
-            });
-        })();
+<p>&nbsp; &nbsp; &lt;div class=&quot;volume-control&quot;&gt;<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &lt;span&gt;🔊&lt;/span&gt;<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &lt;input type=&quot;range&quot; min=&quot;0&quot; max=&quot;1&quot; step=&quot;0.01&quot; value=&quot;0.5&quot; id=&quot;volumeSlider&quot;&gt;<br />
+&nbsp; &nbsp; &lt;/div&gt;</p>
 
-        (function() {
-            var translations = {
-                ru: {
-                    title: 'About Us',
-                    text: 'Мы — группа "профессоров" великой науки под названием "шитпост".<br>Принцесса Жизель и ещё два человека делают всякую хрень в интернете, и это всё.<br>Буквально.<br>На главной странице можно увидеть наш телеграм.',
-                    back: '← На главную',
-                    disclaimer: 'Все использованные изображения и материалы принадлежат их законным владельцам.\nСайт создан в развлекательных и пародийных целях, не является коммерческим проектом.'
-                },
-                en: {
-                    title: 'About Us',
-                    text: 'We r da group of "professors" of gr8 scince called "shitpost".<br>The princess Giselle n 2 other guys doing some bshit in da internet and thats all.<br>Literally.<br>On da mein page ya can cy aur telegram.',
-                    back: '← Back to main',
-                    disclaimer: 'All images and materials used belong to their respective owners.\nThis site is for entertainment and parody purposes only, and is not a commercial project.'
-                }
-            };
+<p>&nbsp; &nbsp; &lt;div class=&quot;header&quot;&gt;<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &lt;img src=&quot;znidosquid.png&quot; alt=&quot;znidosquid&quot; class=&quot;header-icon&quot;&gt;<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &lt;h1 id=&quot;pageTitle&quot;&gt;About Us&lt;/h1&gt;<br />
+&nbsp; &nbsp; &lt;/div&gt;</p>
 
-            var currentLang = localStorage.getItem('siteLang') || 'ru';
-            var langRu = document.getElementById('langRu');
-            var langEn = document.getElementById('langEn');
+<p>&nbsp; &nbsp; &lt;div class=&quot;content&quot;&gt;<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &lt;p id=&quot;aboutText&quot;&gt;<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; We r da group of &quot;professors&quot; of gr8 scince called &quot;shitpost&quot;.&lt;br&gt;<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; The princess Giselle n 2 other guys doing some bshit in da internet and thats all.&lt;br&gt;<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Literally.&lt;br&gt;<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; On da mein page ya can cy aur telegram.<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &lt;/p&gt;<br />
+&nbsp; &nbsp; &lt;/div&gt;</p>
 
-            function setLanguage(lang) {
-                var t = translations[lang];
-                document.getElementById('pageTitle').textContent = t.title;
-                document.getElementById('aboutText').innerHTML = t.text;
-                document.getElementById('backLink').textContent = t.back;
-                document.getElementById('disclaimer').innerHTML = t.disclaimer.replace(/\n/g, '<br>');
-                if (lang === 'ru') {
-                    langRu.classList.add('active');
-                    langEn.classList.remove('active');
-                } else {
-                    langEn.classList.add('active');
-                    langRu.classList.remove('active');
-                }
-                localStorage.setItem('siteLang', lang);
-                currentLang = lang;
-            }
+<p>&nbsp; &nbsp; &lt;a href=&quot;index.html&quot; class=&quot;btn&quot; id=&quot;backLink&quot;&gt;&larr; Back to main&lt;/a&gt;</p>
 
-            langRu.addEventListener('click', function() {
-                if (currentLang !== 'ru') setLanguage('ru');
-            });
-            langEn.addEventListener('click', function() {
-                if (currentLang !== 'en') setLanguage('en');
-            });
+<p>&nbsp; &nbsp; &lt;div class=&quot;disclaimer&quot; id=&quot;disclaimer&quot;&gt;<br />
+&nbsp; &nbsp; &nbsp; &nbsp; Все использованные изображения и материалы принадлежат их законным владельцам.&lt;br&gt;<br />
+&nbsp; &nbsp; &nbsp; &nbsp; Сайт создан в развлекательных и пародийных целях, не является коммерческим проектом.<br />
+&nbsp; &nbsp; &lt;/div&gt;</p>
 
-            setLanguage(currentLang);
-        })();
-    </script>
+<p>&nbsp; &nbsp; &lt;audio loop&gt;<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &lt;source src=&quot;nerd.mp3&quot; type=&quot;audio/mpeg&quot;&gt;<br />
+&nbsp; &nbsp; &lt;/audio&gt;</p>
+
+<p>&nbsp; &nbsp; &lt;script&gt;<br />
+&nbsp; &nbsp; &nbsp; &nbsp; (function() {<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; var audio = document.querySelector(&#39;audio&#39;);<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; var slider = document.getElementById(&#39;volumeSlider&#39;);<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; if (!audio || !slider) return;<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; var saved = localStorage.getItem(&#39;siteVolume&#39;);<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; if (saved !== null) {<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; audio.volume = parseFloat(saved);<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; slider.value = saved;<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; } else {<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; audio.volume = 0.5;<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; slider.value = 0.5;<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; }<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; slider.addEventListener(&#39;input&#39;, function() {<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; audio.volume = parseFloat(this.value);<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; localStorage.setItem(&#39;siteVolume&#39;, this.value);<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; });<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; audio.play().catch(function() {<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; document.addEventListener(&#39;click&#39;, function playOnClick() {<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; audio.play();<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; document.removeEventListener(&#39;click&#39;, playOnClick);<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; }, { once: true });<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; });<br />
+&nbsp; &nbsp; &nbsp; &nbsp; })();</p>
+
+<p>&nbsp; &nbsp; &nbsp; &nbsp; (function() {<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; var translations = {<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; ru: {<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; title: &#39;About Us&#39;,<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; text: &#39;Мы &mdash; группа &quot;профессоров&quot; великой науки под названием &quot;щитпост&quot;.&lt;br&gt;Принцесса Жизель и ещё два человека делают всякую хрень в интернете, и это всё.&lt;br&gt;Буквально.&lt;br&gt;На главной странице можно увидеть наш телеграм.&#39;,<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; back: &#39;&larr; На главную&#39;,<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; disclaimer: &#39;Все использованные изображения и материалы принадлежат их законным владельцам.\nСайт создан в развлекательных и пародийных целях, не является коммерческим проектом.&#39;<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; },<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; en: {<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; title: &#39;About Us&#39;,<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; text: &#39;We r da group of &quot;professors&quot; of gr8 scince called &quot;shitpost&quot;.&lt;br&gt;The princess Giselle n 2 other guys doing some bshit in da internet and thats all.&lt;br&gt;Literally.&lt;br&gt;On da mein page ya can cy aur telegram.&#39;,<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; back: &#39;&larr; Back to main&#39;,<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; disclaimer: &#39;All images and materials used belong to their respective owners.\nThis site is for entertainment and parody purposes only, and is not a commercial project.&#39;<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; }<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; };</p>
+
+<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; var currentLang = localStorage.getItem(&#39;siteLang&#39;) || &#39;ru&#39;;<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; var langRu = document.getElementById(&#39;langRu&#39;);<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; var langEn = document.getElementById(&#39;langEn&#39;);</p>
+
+<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; function setLanguage(lang) {<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; var t = translations[lang];<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; document.getElementById(&#39;pageTitle&#39;).textContent = t.title;<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; document.getElementById(&#39;aboutText&#39;).innerHTML = t.text;<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; document.getElementById(&#39;backLink&#39;).textContent = t.back;<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; document.getElementById(&#39;disclaimer&#39;).innerHTML = t.disclaimer.replace(/\n/g, &#39;&lt;br&gt;&#39;);<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; if (lang === &#39;ru&#39;) {<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; langRu.classList.add(&#39;active&#39;);<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; langEn.classList.remove(&#39;active&#39;);<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; } else {<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; langEn.classList.add(&#39;active&#39;);<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; langRu.classList.remove(&#39;active&#39;);<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; }<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; localStorage.setItem(&#39;siteLang&#39;, lang);<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; currentLang = lang;<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; }</p>
+
+<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; langRu.addEventListener(&#39;click&#39;, function() {<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; if (currentLang !== &#39;ru&#39;) setLanguage(&#39;ru&#39;);<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; });<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; langEn.addEventListener(&#39;click&#39;, function() {<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; if (currentLang !== &#39;en&#39;) setLanguage(&#39;en&#39;);<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; });</p>
+
+<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; setLanguage(currentLang);<br />
+&nbsp; &nbsp; &nbsp; &nbsp; })();<br />
+&nbsp; &nbsp; &lt;/script&gt;<br />
+&lt;/body&gt;<br />
+&lt;/html&gt;</p>
 </body>
 </html>
