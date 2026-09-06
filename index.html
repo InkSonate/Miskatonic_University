@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Miskatonic University</title>
     <style>
-        /* --- все стили как в предыдущем полном коде --- */
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             min-height: 100vh;
@@ -109,7 +108,6 @@
             width: 100%;
         }
 
-        /* ===== СТИЛЬНЫЕ КНОПКИ ===== */
         .btn {
             display: inline-block;
             padding: 18px 50px;
@@ -386,28 +384,49 @@
         </div>
     </div>
 
-    <audio loop>
-        <source src="nerd.mp3" type="audio/mpeg">
+    <!-- НОВАЯ МУЗЫКА gg.mp3 с синхронизацией -->
+    <audio id="bgMusic" loop>
+        <source src="gg.mp3" type="audio/mpeg">
     </audio>
 
     <script>
-        // Музыка + ползунок
+        // === Музыка с синхронизацией времени ===
         (function() {
-            var audio = document.querySelector('audio');
+            var audio = document.getElementById('bgMusic');
             var slider = document.getElementById('volumeSlider');
             if (!audio || !slider) return;
-            var saved = localStorage.getItem('siteVolume');
-            if (saved !== null) {
-                audio.volume = parseFloat(saved);
-                slider.value = saved;
+
+            // Восстанавливаем время
+            var savedTime = sessionStorage.getItem('musicTime');
+            if (savedTime !== null) {
+                audio.currentTime = parseFloat(savedTime);
+            }
+
+            // Восстанавливаем громкость
+            var savedVolume = localStorage.getItem('siteVolume');
+            if (savedVolume !== null) {
+                audio.volume = parseFloat(savedVolume);
+                slider.value = savedVolume;
             } else {
                 audio.volume = 0.5;
                 slider.value = 0.5;
             }
+
+            // Сохраняем время при обновлении
+            audio.addEventListener('timeupdate', function() {
+                sessionStorage.setItem('musicTime', audio.currentTime);
+            });
+            window.addEventListener('beforeunload', function() {
+                sessionStorage.setItem('musicTime', audio.currentTime);
+            });
+
+            // Громкость
             slider.addEventListener('input', function() {
                 audio.volume = parseFloat(this.value);
                 localStorage.setItem('siteVolume', this.value);
             });
+
+            // Автозапуск
             audio.play().catch(function() {
                 document.addEventListener('click', function playOnClick() {
                     audio.play();
@@ -416,7 +435,7 @@
             });
         })();
 
-        // Галерея
+        // --- Галерея (без изменений) ---
         (function() {
             var slides = [
                 { src: 'ourstory1.png', caption: { ru: '1488 год', en: '1488 year' } },
@@ -494,14 +513,14 @@
             updateSlide(0);
         })();
 
-        // Переключение языка
+        // --- Переключение языка ---
         (function() {
             var translations = {
                 ru: {
                     title: 'Miskatonic University',
                     btnAbout: 'О нас',
                     btnSteam: 'Мы в Стим',
-                    btnGame: 'Игра',           // ← здесь теперь "Игра"
+                    btnGame: 'Игра',
                     btnGallery: 'Галерея',
                     btnRickroll: 'Рикролл',
                     tg: 't.me/MiskatonicTeaParty',
