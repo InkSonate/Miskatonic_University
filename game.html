@@ -122,9 +122,10 @@
             gap: 20px;
         }
         .game-info h2 {
-            font-size: 3rem;
+            font-size: 2.8rem;
             color: #ffe484;
             text-shadow: 0 0 20px rgba(255,200,0,0.4);
+            word-break: break-word;
         }
         .game-info p {
             font-size: 1.6rem;
@@ -209,7 +210,6 @@
             box-shadow: 0 0 10px #ffd700;
         }
 
-        /* Модальное окно */
         .modal {
             display: none;
             position: fixed;
@@ -320,11 +320,9 @@
 
     <div class="game-container">
         <div class="game-info">
-            <h2 id="gameName">Faraday's Game</h2>
+            <h2 id="gameName">混凝土中的女孩 (Girl in Concrete)</h2>
             <p id="gameDesc">
-                Это увлекательная игра от нашего друга Faraday.<br>
-                Здесь вы найдёте приключения, загадки и море веселья.<br>
-                Скоро выйдет на всех платформах!
+                Игра от Faraday, описание в доработке
             </p>
             <a href="index.html" class="btn" id="backBtn">← Back to main</a>
         </div>
@@ -343,7 +341,6 @@
         </div>
     </div>
 
-    <!-- Модальное окно -->
     <div class="modal" id="modal">
         <div class="modal-content">
             <button class="modal-close" id="modalClose">✕</button>
@@ -360,7 +357,6 @@
     </audio>
 
     <script>
-        // Музыка
         (function() {
             var audio = document.querySelector('audio');
             var slider = document.getElementById('volumeSlider');
@@ -385,19 +381,18 @@
             });
         })();
 
-        // Переключение языка
         (function() {
             var translations = {
                 ru: {
                     title: 'Game',
-                    name: 'Игра Faraday',
-                    desc: 'Это увлекательная игра от нашего друга Faraday.\nЗдесь вы найдёте приключения, загадки и море веселья.\nСкоро выйдет на всех платформах!',
+                    name: '混凝土中的女孩 (Girl in Concrete)',
+                    desc: 'Игра от Faraday, описание в доработке',
                     back: '← На главную'
                 },
                 en: {
                     title: 'Game',
-                    name: "Faraday's Game",
-                    desc: "This is an exciting game from our friend Faraday.\nYou'll find adventures, mysteries, and lots of fun.\nComing soon to all platforms!",
+                    name: 'Girl in Concrete',
+                    desc: 'Game by Faraday, description under development',
                     back: '← Back to main'
                 }
             };
@@ -410,7 +405,7 @@
                 var t = translations[lang];
                 document.getElementById('pageTitle').textContent = t.title;
                 document.getElementById('gameName').textContent = t.name;
-                document.getElementById('gameDesc').innerHTML = t.desc.replace(/\n/g, '<br>');
+                document.getElementById('gameDesc').textContent = t.desc;
                 document.getElementById('backBtn').textContent = t.back;
                 if (lang === 'ru') {
                     langRu.classList.add('active');
@@ -433,7 +428,6 @@
             setLanguage(currentLang);
         })();
 
-        // Галерея
         (function() {
             var images = ['gmscreen1.png', 'gmscreen2.png', 'slon.png'];
             var currentIndex = 0;
