@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us – Miskatonic</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            min-height: 100vh;
+            background-image: url('professorsanych.png');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            font-family: 'Patrick Hand', cursive, Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            color: white;
+            text-shadow: 2px 2px 6px rgba(0,0,0,0.8);
+            position: relative;
+        }
+        .lang-switch {
+            position: fixed;
+            top: 15px;
+            right: 15px;
+            display: flex;
+            gap: 5px;
+            background: rgba(0,0,0,0.6);
+            backdrop-filter: blur(4px);
+            padding: 5px 10px;
+            border-radius: 30px;
+            border: 2px solid rgba(255,255,255,0.2);
+            z-index: 1000;
+        }
+        .lang-option {
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            color: #aaa;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-family: 'Patrick Hand', cursive;
+            background: transparent;
+            border: none;
+            text-shadow: none;
+        }
+        .lang-option.active {
+            background: #ffe484;
+            color: #1a1a1a;
+            box-shadow: 0 0 15px rgba(255,215,0,0.4);
+        }
+        .lang-option:hover:not(.active) { color: #fff; }
+        .lang-option:focus { outline: none; }
+
+        .volume-control {
+            position: fixed;
+            top: 70px;
+            right: 15px;
+            z-index: 1000;
+            background: rgba(0,0,0,0.6);
+            backdrop-filter: blur(4px);
+            padding: 6px 12px;
+            border-radius: 30px;
+            border: 1px solid rgba(255,255,255,0.2);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .volume-control span { color: #ffe484; font-size: 1.2rem; }
+        .volume-control input[type="range"] { width: 80px; accent-color: #ffd700; background: transparent; cursor: pointer; }
+        @media (max-width: 700px) {
+            .volume-control { top: 60px; right: 10px; padding: 4px 8px; }
+            .volume-control input[type="range"] { width: 60px; }
+        }
+
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            gap: 20px;
+            width: 100%;
+            flex-wrap: wrap;
+            margin-top: 20px;
+            margin-bottom: 30px;
+        }
+        .header h1 {
+            font-size: 3.5rem;
+            font-weight: normal;
+            letter-spacing: 4px;
+            text-shadow: 0 0 20px rgba(255,255,255,0.3);
+            margin: 0;
+        }
+        .header .header-icon {
+            height: 70px;
+            width: auto;
+            order: -1;
+        }
+
+        .content {
+            max-width: 700px;
+            background: rgba(0,0,0,0.5);
+            backdrop-filter: blur(4px);
+            padding: 30px 40px;
+            border-radius: 30px;
+            border: 1px solid rgba(255,255,255,0.2);
+            margin: 20px 0;
+            text-align: center;
+        }
+        .content p {
+            font-size: 1.8rem;
+            line-height: 1.6;
+            color: #ffe484;
+            text-shadow: 0 0 10px rgba(255,200,0,0.3);
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 18px 50px;
+            border-radius: 8px;
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #ffe484;
+            text-decoration: none;
+            text-shadow: 0 0 10px rgba(255, 200, 0, 0.3);
+            border: none;
+            background: linear-gradient(145deg, rgba(139, 128, 128, 0.85), rgba(107, 96, 96, 0.85));
+            backdrop-filter: blur(4px);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+            transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            cursor: pointer;
+            width: fit-content;
+            min-width: 220px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            letter-spacing: 0.5px;
+        }
+        .btn::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255, 215, 0, 0.15) 0%, transparent 60%);
+            opacity: 0;
+            transition: opacity 0.5s;
+            pointer-events: none;
+        }
+        .btn:hover::after {
+            opacity: 1;
+        }
+        .btn:hover {
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 8px 30px rgba(255, 215, 0, 0.3), 0 0 30px rgba(255, 215, 0, 0.1);
+            background: linear-gradient(145deg, rgba(155, 144, 144, 0.9), rgba(123, 112, 112, 0.9));
+            text-shadow: 0 0 20px rgba(255, 200, 0, 0.5);
+        }
+        .btn:active {
+            transform: scale(0.96) translateY(2px);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
+        }
+
+        .disclaimer {
+            margin-top: 30px;
+            font-size: 0.7rem;
+            color: rgba(255,255,255,0.5);
+            text-align: center;
+            max-width: 500px;
+            text-shadow: none;
+            background: rgba(0,0,0,0.3);
+            padding: 8px 15px;
+            border-radius: 10px;
+        }
+
+        @media (max-width: 700px) {
+            .lang-switch { top: 10px; right: 10px; padding: 3px 8px; }
+            .lang-option { font-size: 0.9rem; padding: 3px 10px; }
+            .volume-control { top: 55px; right: 8px; }
+            .volume-control input[type="range"] { width: 50px; }
+            .header {
+                justify-content: center;
+            }
+            .header .header-icon { display: none; }
+            .header h1 {
+                font-size: 2.2rem;
+                padding: 0;
+                letter-spacing: 2px;
+            }
+            .content { padding: 20px; margin: 10px; }
+            .content p { font-size: 1.3rem; }
+            .btn {
+                font-size: 1.2rem;
+                padding: 10px 20px;
+                min-width: unset;
+                width: 90%;
+                max-width: 300px;
+                border-radius: 30px;
+                background: linear-gradient(145deg, rgba(139, 128, 128, 0.85), rgba(107, 96, 96, 0.85));
+            }
+            .disclaimer { font-size: 0.6rem; padding: 6px 10px; }
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Patrick+Hand&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <div class="lang-switch">
+        <button class="lang-option active" data-lang="ru" id="langRu">RU</button>
+        <button class="lang-option" data-lang="en" id="langEn">EN</button>
+    </div>
+
+    <div class="volume-control">
+        <span>🔊</span>
+        <input type="range" min="0" max="1" step="0.01" value="0.5" id="volumeSlider">
+    </div>
+
+    <div class="header">
+        <img src="znidosquid.png" alt="znidosquid" class="header-icon">
+        <h1 id="pageTitle">About Us</h1>
+    </div>
+
+    <div class="content">
+        <p id="aboutText">
+            We r da group of "professors" of gr8 scince called "shitpost".<br>
+            The princess Giselle n 2 other guys doing some bshit in da internet and thats all.<br>
+            Literally.<br>
+            On da mein page ya can cy aur telegram.
+        </p>
+    </div>
+
+    <a href="index.html" class="btn" id="backLink">← Back to main</a>
+
+    <div class="disclaimer" id="disclaimer">
+        Все использованные изображения и материалы принадлежат их законным владельцам.<br>
+        Сайт создан в развлекательных и пародийных целях, не является коммерческим проектом.
+    </div>
+
+    <audio loop>
+        <source src="nerd.mp3" type="audio/mpeg">
+    </audio>
+
+    <script>
+        (function() {
+            var audio = document.querySelector('audio');
+            var slider = document.getElementById('volumeSlider');
+            if (!audio || !slider) return;
+            var saved = localStorage.getItem('siteVolume');
+            if (saved !== null) {
+                audio.volume = parseFloat(saved);
+                slider.value = saved;
+            } else {
+                audio.volume = 0.5;
+                slider.value = 0.5;
+            }
+            slider.addEventListener('input', function() {
+                audio.volume = parseFloat(this.value);
+                localStorage.setItem('siteVolume', this.value);
+            });
+            audio.play().catch(function() {
+                document.addEventListener('click', function playOnClick() {
+                    audio.play();
+                    document.removeEventListener('click', playOnClick);
+                }, { once: true });
+            });
+        })();
+
+        (function() {
+            var translations = {
+                ru: {
+                    title: 'About Us',
+                    text: 'Мы — группа "профессоров" великой науки под названием "щитпост".<br>Принцесса Жизель и ещё два человека делают всякую хрень в интернете, и это всё.<br>Буквально.<br>На главной странице можно увидеть наш телеграм.',
+                    back: '← На главную',
+                    disclaimer: 'Все использованные изображения и материалы принадлежат их законным владельцам.\nСайт создан в развлекательных и пародийных целях, не является коммерческим проектом.'
+                },
+                en: {
+                    title: 'About Us',
+                    text: 'We r da group of "professors" of gr8 scince called "shitpost".<br>The princess Giselle n 2 other guys doing some bshit in da internet and thats all.<br>Literally.<br>On da mein page ya can cy aur telegram.',
+                    back: '← Back to main',
+                    disclaimer: 'All images and materials used belong to their respective owners.\nThis site is for entertainment and parody purposes only, and is not a commercial project.'
+                }
+            };
+
+            var currentLang = localStorage.getItem('siteLang') || 'ru';
+            var langRu = document.getElementById('langRu');
+            var langEn = document.getElementById('langEn');
+
+            function setLanguage(lang) {
+                var t = translations[lang];
+                document.getElementById('pageTitle').textContent = t.title;
+                document.getElementById('aboutText').innerHTML = t.text;
+                document.getElementById('backLink').textContent = t.back;
+                document.getElementById('disclaimer').innerHTML = t.disclaimer.replace(/\n/g, '<br>');
+                if (lang === 'ru') {
+                    langRu.classList.add('active');
+                    langEn.classList.remove('active');
+                } else {
+                    langEn.classList.add('active');
+                    langRu.classList.remove('active');
+                }
+                localStorage.setItem('siteLang', lang);
+                currentLang = lang;
+            }
+
+            langRu.addEventListener('click', function() {
+                if (currentLang !== 'ru') setLanguage('ru');
+            });
+            langEn.addEventListener('click', function() {
+                if (currentLang !== 'en') setLanguage('en');
+            });
+
+            setLanguage(currentLang);
+        })();
+    </script>
+</body>
+</html>
