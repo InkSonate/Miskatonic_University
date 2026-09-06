@@ -72,41 +72,40 @@
             align-items: center;
             gap: 8px;
         }
-        .volume-control span {
-            color: #ffe484;
-            font-size: 1.2rem;
-        }
-        .volume-control input[type="range"] {
-            width: 80px;
-            accent-color: #ffd700;
-            background: transparent;
-            cursor: pointer;
-        }
+        .volume-control span { color: #ffe484; font-size: 1.2rem; }
+        .volume-control input[type="range"] { width: 80px; accent-color: #ffd700; background: transparent; cursor: pointer; }
         @media (max-width: 700px) {
             .volume-control { top: 60px; right: 10px; padding: 4px 8px; }
             .volume-control input[type="range"] { width: 60px; }
         }
 
+        /* Шапка — на десктопе влево, на мобиле по центру */
         .header {
             display: flex;
             align-items: center;
-            justify-content: center;
+            justify-content: flex-start; /* ← влево на десктопе */
             gap: 20px;
             width: 100%;
             flex-wrap: wrap;
             margin-top: 20px;
         }
-        .header img { height: 50px; width: auto; }
+        /* Убираем фон у заголовка */
         .header h1 {
             font-size: 3.5rem;
             font-weight: normal;
             letter-spacing: 4px;
-            background: rgba(0,0,0,0.4);
-            padding: 10px 30px;
-            border-radius: 30px;
-            backdrop-filter: blur(2px);
+            /* background, border-radius, backdrop-filter удалены */
             text-shadow: 0 0 20px rgba(255,255,255,0.3);
+            margin: 0;
         }
+        /* Иконка znidosquid (бывшая правая) — делаем больше */
+        .header .header-icon {
+            height: 70px; /* было 50px */
+            width: auto;
+            order: -1; /* чтобы иконка была перед заголовком */
+        }
+        /* Левую иконку удаляем из HTML, поэтому стиль не нужен */
+
         .main-center {
             display: flex;
             flex-direction: column;
@@ -257,13 +256,23 @@
             flex-shrink: 1;
         }
 
+        /* Мобильная версия — оставляем как есть (центр, иконки скрыты) */
         @media (max-width: 700px) {
             .lang-switch { top: 10px; right: 10px; padding: 3px 8px; }
             .lang-option { font-size: 0.9rem; padding: 3px 10px; }
             .volume-control { top: 55px; right: 8px; }
             .volume-control input[type="range"] { width: 50px; }
-            .header img { display: none; }
-            .header h1 { font-size: 2.2rem; padding: 8px 20px; letter-spacing: 2px; }
+            .header {
+                justify-content: center; /* центр на мобиле */
+            }
+            .header .header-icon {
+                display: none; /* скрываем иконку на мобиле */
+            }
+            .header h1 {
+                font-size: 2.2rem;
+                padding: 0; /* убираем padding, так как фона нет */
+                letter-spacing: 2px;
+            }
             .btn { width: 90%; max-width: 350px; min-width: unset; font-size: 1.6rem; padding: 14px 20px; border-radius: 30px; }
             .gallery-container { max-width: 95%; padding: 15px; }
             .gallery-slide img { max-height: 250px; }
@@ -309,10 +318,10 @@
         <input type="range" min="0" max="1" step="0.01" value="0.5" id="volumeSlider">
     </div>
 
+    <!-- Шапка: только одна иконка (бывшая правая), заголовок без фона -->
     <div class="header">
-        <img src="znidosquid.png" alt="znidosquid left">
+        <img src="znidosquid.png" alt="znidosquid" class="header-icon">
         <h1 id="mainTitle">Miskatonic University</h1>
-        <img src="znidosquid.png" alt="znidosquid right">
     </div>
 
     <div class="main-center">
@@ -354,29 +363,23 @@
     </audio>
 
     <script>
-        // Музыка с ползунком
+        // Музыка + ползунок
         (function() {
             var audio = document.querySelector('audio');
             var slider = document.getElementById('volumeSlider');
             if (!audio || !slider) return;
-
-            // Загрузка сохранённой громкости
-            var savedVolume = localStorage.getItem('siteVolume');
-            if (savedVolume !== null) {
-                audio.volume = parseFloat(savedVolume);
-                slider.value = savedVolume;
+            var saved = localStorage.getItem('siteVolume');
+            if (saved !== null) {
+                audio.volume = parseFloat(saved);
+                slider.value = saved;
             } else {
                 audio.volume = 0.5;
                 slider.value = 0.5;
             }
-
-            // При изменении ползунка
             slider.addEventListener('input', function() {
                 audio.volume = parseFloat(this.value);
                 localStorage.setItem('siteVolume', this.value);
             });
-
-            // Автозапуск
             audio.play().catch(function() {
                 document.addEventListener('click', function playOnClick() {
                     audio.play();
@@ -385,7 +388,7 @@
             });
         })();
 
-        // --- Галерея ---
+        // Галерея
         (function() {
             var slides = [
                 { src: 'ourstory1.png', caption: { ru: '1488 год', en: '1488 year' } },
@@ -463,7 +466,7 @@
             updateSlide(0);
         })();
 
-        // --- Переключение языка ---
+        // Переключение языка
         (function() {
             var translations = {
                 ru: {

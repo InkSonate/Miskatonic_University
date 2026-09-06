@@ -79,23 +79,24 @@
         .header {
             display: flex;
             align-items: center;
-            justify-content: center;
+            justify-content: flex-start;
             gap: 20px;
             width: 100%;
             flex-wrap: wrap;
             margin-top: 20px;
             margin-bottom: 30px;
         }
-        .header img { height: 50px; width: auto; }
         .header h1 {
             font-size: 3.5rem;
             font-weight: normal;
             letter-spacing: 4px;
-            background: rgba(0,0,0,0.4);
-            padding: 10px 30px;
-            border-radius: 30px;
-            backdrop-filter: blur(2px);
             text-shadow: 0 0 20px rgba(255,255,255,0.3);
+            margin: 0;
+        }
+        .header .header-icon {
+            height: 70px;
+            width: auto;
+            order: -1;
         }
         .cards-container {
             display: flex;
@@ -189,8 +190,15 @@
             .lang-option { font-size: 0.9rem; padding: 3px 10px; }
             .volume-control { top: 55px; right: 8px; }
             .volume-control input[type="range"] { width: 50px; }
-            .header img { display: none; }
-            .header h1 { font-size: 2.2rem; padding: 8px 20px; }
+            .header {
+                justify-content: center;
+            }
+            .header .header-icon { display: none; }
+            .header h1 {
+                font-size: 2.2rem;
+                padding: 0;
+                letter-spacing: 2px;
+            }
             .card { width: 100%; max-width: 300px; }
             .back-link { font-size: 1.2rem; padding: 10px 20px; width: 90%; max-width: 300px; text-align: center; }
             .disclaimer { font-size: 0.6rem; padding: 6px 10px; }
@@ -211,9 +219,8 @@
     </div>
 
     <div class="header">
-        <img src="znidosquid.png" alt="znidosquid left">
+        <img src="znidosquid.png" alt="znidosquid" class="header-icon">
         <h1 id="pageTitle">We n Steam</h1>
-        <img src="znidosquid.png" alt="znidosquid right">
     </div>
 
     <div class="cards-container">
@@ -278,10 +285,10 @@
             var audio = document.querySelector('audio');
             var slider = document.getElementById('volumeSlider');
             if (!audio || !slider) return;
-            var savedVolume = localStorage.getItem('siteVolume');
-            if (savedVolume !== null) {
-                audio.volume = parseFloat(savedVolume);
-                slider.value = savedVolume;
+            var saved = localStorage.getItem('siteVolume');
+            if (saved !== null) {
+                audio.volume = parseFloat(saved);
+                slider.value = saved;
             } else {
                 audio.volume = 0.5;
                 slider.value = 0.5;
