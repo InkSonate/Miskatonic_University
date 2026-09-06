@@ -133,6 +133,12 @@
             color: #f0f0f0;
             text-shadow: 0 0 10px rgba(0,0,0,0.6);
         }
+        .game-info .btn-group {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-top: 10px;
+        }
         .game-info .btn {
             align-self: flex-start;
             padding: 12px 35px;
@@ -148,11 +154,22 @@
             box-shadow: 0 4px 15px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.15);
             transition: all 0.3s;
             cursor: pointer;
+            text-align: center;
         }
         .game-info .btn:hover {
             transform: translateY(-3px) scale(1.02);
             box-shadow: 0 8px 30px rgba(255,215,0,0.3);
             background: linear-gradient(145deg, rgba(155,144,144,0.9), rgba(123,112,112,0.9));
+        }
+        .game-info .btn-download {
+            background: linear-gradient(145deg, rgba(50, 180, 100, 0.85), rgba(30, 140, 70, 0.85));
+            box-shadow: 0 4px 15px rgba(0, 200, 80, 0.3);
+            text-shadow: 0 0 15px rgba(100, 255, 150, 0.3);
+        }
+        .game-info .btn-download:hover {
+            background: linear-gradient(145deg, rgba(70, 210, 120, 0.9), rgba(50, 170, 90, 0.9));
+            box-shadow: 0 8px 30px rgba(0, 255, 100, 0.4);
+            text-shadow: 0 0 25px rgba(100, 255, 150, 0.6);
         }
 
         .game-gallery {
@@ -293,6 +310,7 @@
             }
             .game-info h2 { font-size: 2.2rem; }
             .game-info p { font-size: 1.2rem; }
+            .game-info .btn { font-size: 1.2rem; padding: 10px 25px; align-self: stretch; text-align: center; }
             .game-gallery .main-image { max-width: 100%; }
             .modal-content img { max-height: 60vh; }
             .modal-nav button { font-size: 1.8rem; padding: 3px 15px; }
@@ -324,7 +342,10 @@
             <p id="gameDesc">
                 Морита Хару была убита 17 лет назад, за свои грехи при жизни она попадает в ад, переживая бесконечный цикл одинаковых дней и пытаясь все исправить.
             </p>
-            <a href="index.html" class="btn" id="backBtn">← Back to main</a>
+            <div class="btn-group">
+                <a href="https://drive.google.com/file/d/18fjP4pVlSU6oEC6KMNpR8dlvjyB_1QU3/view?usp=sharing" target="_blank" class="btn btn-download" id="downloadBtn">Скачать</a>
+                <a href="index.html" class="btn" id="backBtn">← Back to main</a>
+            </div>
         </div>
 
         <div class="game-gallery">
@@ -387,12 +408,14 @@
                     title: 'Game',
                     name: '混凝土中的女孩 (Girl in Concrete)',
                     desc: 'Морита Хару была убита 17 лет назад, за свои грехи при жизни она попадает в ад, переживая бесконечный цикл одинаковых дней и пытаясь все исправить.',
+                    download: 'Скачать',
                     back: '← На главную'
                 },
                 en: {
                     title: 'Game',
                     name: 'Girl in Concrete',
                     desc: 'Morita Haru was killed 17 years ago. For her sins in life, she is sent to hell, reliving an endless cycle of identical days and trying to make things right.',
+                    download: 'Download',
                     back: '← Back to main'
                 }
             };
@@ -406,6 +429,7 @@
                 document.getElementById('pageTitle').textContent = t.title;
                 document.getElementById('gameName').textContent = t.name;
                 document.getElementById('gameDesc').textContent = t.desc;
+                document.getElementById('downloadBtn').textContent = t.download;
                 document.getElementById('backBtn').textContent = t.back;
                 if (lang === 'ru') {
                     langRu.classList.add('active');
