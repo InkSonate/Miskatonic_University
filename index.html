@@ -108,7 +108,7 @@
             width: 100%;
         }
 
-        /* ===== НОВЫЕ СТИЛИ КНОПОК ===== */
+        /* ===== СТИЛЬНЫЕ КНОПКИ ===== */
         .btn {
             display: inline-block;
             padding: 15px 40px;
@@ -169,7 +169,6 @@
         .btn-rickroll:active {
             box-shadow: 0 2px 10px rgba(200, 0, 0, 0.3);
         }
-        /* ===== КОНЕЦ НОВЫХ СТИЛЕЙ КНОПОК ===== */
 
         .gallery-container {
             display: none;
@@ -335,10 +334,222 @@
 </head>
 <body>
 
-    <!-- Переключатель языков, ползунок, шапка, кнопки, галерея, футер, аудио и скрипты (оставляем как в предыдущем коде) -->
+    <div class="lang-switch">
+        <button class="lang-option active" data-lang="ru" id="langRu">RU</button>
+        <button class="lang-option" data-lang="en" id="langEn">EN</button>
+    </div>
 
-    <!-- Далее вставьте остальной HTML и JS из предыдущего полного кода index.html, но уже с новыми стилями кнопок -->
-    <!-- (Полный код я не повторяю, чтобы не дублировать, но вы можете просто заменить блок .btn стилей в вашем существующем файле) -->
+    <div class="volume-control">
+        <span>🔊</span>
+        <input type="range" min="0" max="1" step="0.01" value="0.5" id="volumeSlider">
+    </div>
 
+    <div class="header">
+        <img src="znidosquid.png" alt="znidosquid" class="header-icon">
+        <h1 id="mainTitle">Miskatonic University</h1>
+    </div>
+
+    <div class="main-center">
+        <a href="about.html" class="btn" id="btnAbout">About Us</a>
+        <a href="steam.html" class="btn" id="btnSteam">We n Steam</a>
+        <button class="btn" id="btnGallery">Галерея</button>
+        <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" target="_blank" class="btn btn-rickroll" id="btnRickroll">Rickroll</a>
+    </div>
+
+    <div class="gallery-container" id="galleryContainer">
+        <div class="gallery-slide">
+            <img id="galleryImage" src="ourstory1.png" alt="our story">
+            <div class="gallery-caption" id="galleryCaption">1488 год</div>
+        </div>
+        <div class="gallery-nav">
+            <button id="prevBtn">◀</button>
+            <button id="nextBtn">▶</button>
+        </div>
+        <div class="gallery-indicators" id="indicators">
+            <span class="active"></span>
+            <span></span>
+            <span></span>
+        </div>
+    </div>
+
+    <div class="footer-row">
+        <div class="bottom-left">
+            <img src="waiting.gif" alt="waiting">
+            <a href="https://t.me/MiskatonicTeaParty" target="_blank" id="tgLink">t.me/MiskatonicTeaParty</a>
+        </div>
+        <div class="disclaimer" id="disclaimer">
+            Все использованные изображения и материалы принадлежат их законным владельцам.<br>
+            Сайт создан в развлекательных и пародийных целях, не является коммерческим проектом.
+        </div>
+    </div>
+
+    <audio loop>
+        <source src="nerd.mp3" type="audio/mpeg">
+    </audio>
+
+    <script>
+        // Музыка + ползунок
+        (function() {
+            var audio = document.querySelector('audio');
+            var slider = document.getElementById('volumeSlider');
+            if (!audio || !slider) return;
+            var saved = localStorage.getItem('siteVolume');
+            if (saved !== null) {
+                audio.volume = parseFloat(saved);
+                slider.value = saved;
+            } else {
+                audio.volume = 0.5;
+                slider.value = 0.5;
+            }
+            slider.addEventListener('input', function() {
+                audio.volume = parseFloat(this.value);
+                localStorage.setItem('siteVolume', this.value);
+            });
+            audio.play().catch(function() {
+                document.addEventListener('click', function playOnClick() {
+                    audio.play();
+                    document.removeEventListener('click', playOnClick);
+                }, { once: true });
+            });
+        })();
+
+        // Галерея
+        (function() {
+            var slides = [
+                { src: 'ourstory1.png', caption: { ru: '1488 год', en: '1488 year' } },
+                { src: 'ourstory2.png', caption: { ru: '1984 год', en: '1984 year' } },
+                { src: 'ourstory3.png', caption: { ru: '6967 год', en: '6967 year' } }
+            ];
+            var currentIndex = 0;
+            var container = document.getElementById('galleryContainer');
+            var galleryImage = document.getElementById('galleryImage');
+            var galleryCaption = document.getElementById('galleryCaption');
+            var prevBtn = document.getElementById('prevBtn');
+            var nextBtn = document.getElementById('nextBtn');
+            var indicators = document.getElementById('indicators');
+            var galleryBtn = document.getElementById('btnGallery');
+            var isOpen = false;
+
+            function updateSlide(index) {
+                var slide = slides[index];
+                galleryImage.src = slide.src;
+                var currentLang = localStorage.getItem('siteLang') || 'ru';
+                galleryCaption.textContent = slide.caption[currentLang] || slide.caption.ru;
+                var dots = indicators.querySelectorAll('span');
+                dots.forEach(function(dot, i) {
+                    dot.classList.toggle('active', i === index);
+                });
+            }
+
+            function toggleGallery() {
+                isOpen = !isOpen;
+                if (isOpen) {
+                    container.classList.add('open');
+                    updateSlide(currentIndex);
+                } else {
+                    container.classList.remove('open');
+                }
+            }
+
+            prevBtn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                if (!isOpen) return;
+                currentIndex = (currentIndex - 1 + slides.length) % slides.length;
+                updateSlide(currentIndex);
+            });
+
+            nextBtn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                if (!isOpen) return;
+                currentIndex = (currentIndex + 1) % slides.length;
+                updateSlide(currentIndex);
+            });
+
+            galleryBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                toggleGallery();
+            });
+
+            window.updateGalleryCaption = function(lang) {
+                if (isOpen) {
+                    var slide = slides[currentIndex];
+                    galleryCaption.textContent = slide.caption[lang] || slide.caption.ru;
+                }
+            };
+
+            function initIndicators() {
+                indicators.innerHTML = '';
+                slides.forEach(function(_, i) {
+                    var dot = document.createElement('span');
+                    if (i === 0) dot.classList.add('active');
+                    indicators.appendChild(dot);
+                });
+            }
+            initIndicators();
+            container.classList.remove('open');
+            currentIndex = 0;
+            updateSlide(0);
+        })();
+
+        // Переключение языка
+        (function() {
+            var translations = {
+                ru: {
+                    title: 'Miskatonic University',
+                    btnAbout: 'О нас',
+                    btnSteam: 'Мы в Стим',
+                    btnGallery: 'Галерея',
+                    btnRickroll: 'Рикролл',
+                    tg: 't.me/MiskatonicTeaParty',
+                    disclaimer: 'Все использованные изображения и материалы принадлежат их законным владельцам.\nСайт создан в развлекательных и пародийных целях, не является коммерческим проектом.'
+                },
+                en: {
+                    title: 'Miskatonic University',
+                    btnAbout: 'About Us',
+                    btnSteam: 'We n Steam',
+                    btnGallery: 'Gallery',
+                    btnRickroll: 'Rickroll',
+                    tg: 't.me/MiskatonicTeaParty',
+                    disclaimer: 'All images and materials used belong to their respective owners.\nThis site is for entertainment and parody purposes only, and is not a commercial project.'
+                }
+            };
+
+            var currentLang = localStorage.getItem('siteLang') || 'ru';
+            var langRu = document.getElementById('langRu');
+            var langEn = document.getElementById('langEn');
+
+            function setLanguage(lang) {
+                var t = translations[lang];
+                document.getElementById('mainTitle').textContent = t.title;
+                document.getElementById('btnAbout').textContent = t.btnAbout;
+                document.getElementById('btnSteam').textContent = t.btnSteam;
+                document.getElementById('btnGallery').textContent = t.btnGallery;
+                document.getElementById('btnRickroll').textContent = t.btnRickroll;
+                document.getElementById('tgLink').textContent = t.tg;
+                document.getElementById('disclaimer').innerHTML = t.disclaimer.replace(/\n/g, '<br>');
+                if (lang === 'ru') {
+                    langRu.classList.add('active');
+                    langEn.classList.remove('active');
+                } else {
+                    langEn.classList.add('active');
+                    langRu.classList.remove('active');
+                }
+                localStorage.setItem('siteLang', lang);
+                currentLang = lang;
+                if (window.updateGalleryCaption) {
+                    window.updateGalleryCaption(lang);
+                }
+            }
+
+            langRu.addEventListener('click', function() {
+                if (currentLang !== 'ru') setLanguage('ru');
+            });
+            langEn.addEventListener('click', function() {
+                if (currentLang !== 'en') setLanguage('en');
+            });
+
+            setLanguage(currentLang);
+        })();
+    </script>
 </body>
 </html>
