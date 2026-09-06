@@ -108,7 +108,7 @@
             width: 100%;
         }
 
-        /* ===== НОВЫЕ КНОПКИ: БОЛЬШЕ, ПРЯМОУГОЛЬНЫЕ, ПОЛУПРОЗРАЧНЫЕ ===== */
+        /* ===== СТИЛЬНЫЕ КНОПКИ ===== */
         .btn {
             display: inline-block;
             padding: 18px 50px;
@@ -353,7 +353,7 @@
     <div class="main-center">
         <a href="about.html" class="btn" id="btnAbout">About Us</a>
         <a href="steam.html" class="btn" id="btnSteam">We n Steam</a>
-        <button class="btn" id="btnGallery">Галерея</button>
+        <a href="game.html" class="btn" id="btnGame">Game</a>
         <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" target="_blank" class="btn btn-rickroll" id="btnRickroll">Rickroll</a>
     </div>
 
@@ -499,7 +499,7 @@
                     title: 'Miskatonic University',
                     btnAbout: 'О нас',
                     btnSteam: 'Мы в Стим',
-                    btnGallery: 'Галерея',
+                    btnGame: 'Game',
                     btnRickroll: 'Рикролл',
                     tg: 't.me/MiskatonicTeaParty',
                     disclaimer: 'Все использованные изображения и материалы принадлежат их законным владельцам.\nСайт создан в развлекательных и пародийных целях, не является коммерческим проектом.'
@@ -508,7 +508,7 @@
                     title: 'Miskatonic University',
                     btnAbout: 'About Us',
                     btnSteam: 'We n Steam',
-                    btnGallery: 'Gallery',
+                    btnGame: 'Game',
                     btnRickroll: 'Rickroll',
                     tg: 't.me/MiskatonicTeaParty',
                     disclaimer: 'All images and materials used belong to their respective owners.\nThis site is for entertainment and parody purposes only, and is not a commercial project.'
@@ -524,7 +524,7 @@
                 document.getElementById('mainTitle').textContent = t.title;
                 document.getElementById('btnAbout').textContent = t.btnAbout;
                 document.getElementById('btnSteam').textContent = t.btnSteam;
-                document.getElementById('btnGallery').textContent = t.btnGallery;
+                document.getElementById('btnGame').textContent = t.btnGame;
                 document.getElementById('btnRickroll').textContent = t.btnRickroll;
                 document.getElementById('tgLink').textContent = t.tg;
                 document.getElementById('disclaimer').innerHTML = t.disclaimer.replace(/\n/g, '<br>');
