@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Miskatonic University</title>
+    <title>About Us – Miskatonic</title>
     <style>
         * {
             margin: 0;
@@ -20,11 +20,12 @@
             font-family: 'Patrick Hand', cursive, Arial, sans-serif;
             display: flex;
             flex-direction: column;
-            justify-content: space-between;
+            justify-content: center;
             align-items: center;
-            padding: 20px;
+            padding: 40px 20px;
             color: white;
             text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.8);
+            text-align: center;
         }
 
         .header {
@@ -34,7 +35,7 @@
             gap: 20px;
             width: 100%;
             flex-wrap: wrap;
-            margin-top: 20px;
+            margin-bottom: 30px;
         }
 
         .header img {
@@ -53,69 +54,42 @@
             text-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
         }
 
-        .main-center {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 20px;
+        .content {
+            max-width: 700px;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(4px);
+            padding: 30px 40px;
+            border-radius: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
             margin: 20px 0;
         }
 
-        .btn {
+        .content p {
+            font-size: 1.8rem;
+            line-height: 1.6;
+            color: #ffe484;
+            text-shadow: 0 0 10px rgba(255, 200, 0, 0.3);
+        }
+
+        .back-link {
+            margin-top: 30px;
             display: inline-block;
             background: rgba(0, 0, 0, 0.6);
             backdrop-filter: blur(4px);
-            padding: 15px 40px;
+            padding: 12px 35px;
             border-radius: 50px;
-            font-size: 1.8rem;
-            font-weight: bold;
+            font-size: 1.6rem;
             color: #ffe484;
             text-decoration: none;
-            text-shadow: 0 0 10px rgba(255, 200, 0, 0.5);
             border: 2px solid rgba(255, 255, 255, 0.3);
             transition: all 0.3s ease;
-            cursor: pointer;
-            width: fit-content;
-            min-width: 200px;
-            text-align: center;
         }
 
-        .btn:hover {
+        .back-link:hover {
             background: rgba(255, 215, 0, 0.3);
             border-color: #ffd700;
             transform: scale(1.05);
             box-shadow: 0 0 20px rgba(255, 215, 0, 0.4);
-        }
-
-        .bottom-left {
-            align-self: flex-start;
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            background: rgba(0, 0, 0, 0.4);
-            padding: 10px 20px;
-            border-radius: 20px;
-            backdrop-filter: blur(2px);
-            margin-bottom: 30px;
-        }
-
-        .bottom-left img {
-            height: 80px;
-            width: auto;
-        }
-
-        .bottom-left a {
-            font-size: 2rem;
-            font-weight: bold;
-            color: #ffe484;
-            text-decoration: none;
-            text-shadow: 0 0 10px rgba(255, 200, 0, 0.5);
-            transition: color 0.3s;
-        }
-
-        .bottom-left a:hover {
-            color: #ffffff;
-            text-decoration: underline;
         }
 
         @media (max-width: 700px) {
@@ -126,18 +100,12 @@
             .header img {
                 height: 35px;
             }
-            .bottom-left {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 5px;
-            }
-            .bottom-left a {
-                font-size: 1.5rem;
-            }
-            .btn {
+            .content p {
                 font-size: 1.3rem;
-                padding: 12px 25px;
-                min-width: 150px;
+            }
+            .back-link {
+                font-size: 1.2rem;
+                padding: 10px 20px;
             }
         }
     </style>
@@ -147,23 +115,22 @@
 
     <div class="header">
         <img src="znidosquid.png" alt="znidosquid left">
-        <h1>Miskatonic University</h1>
+        <h1>About Us</h1>
         <img src="znidosquid.png" alt="znidosquid right">
     </div>
 
-    <div class="main-center">
-        <!-- Первая кнопка – теперь ведёт на About Us -->
-        <a href="about.html" class="btn">About Us</a>
-        <!-- Остальные две – рикролл -->
-        <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" target="_blank" class="btn">Nothing here yet</a>
-        <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" target="_blank" class="btn">Nothing here yet</a>
+    <div class="content">
+        <p>
+            We r da group of "professors" of gr8 scince called "shitpost".<br>
+            The princess Giselle n 2 other guys doing some bshit in da internet and thats all.<br>
+            Literally.<br>
+            On da mein page ya can cy aur telegram.
+        </p>
     </div>
 
-    <div class="bottom-left">
-        <img src="waiting1.gif" alt="waiting">
-        <a href="https://t.me/MiskatonicTeaParty" target="_blank">t.me/MiskatonicTeaParty</a>
-    </div>
+    <a href="index.html" class="back-link">← Back to main</a>
 
+    <!-- Музыка – оставляем ту же, чтобы играла и здесь -->
     <audio autoplay loop>
         <source src="nerd.mp3" type="audio/mpeg">
     </audio>
