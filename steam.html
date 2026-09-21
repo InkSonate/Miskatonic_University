@@ -108,31 +108,53 @@
             width: 100%;
             margin: 20px 0;
         }
-
-        /* Стиль для контейнера виджета */
-        .steam-widget {
-            width: 280px;
+        .card {
             background: rgba(0,0,0,0.6);
             backdrop-filter: blur(4px);
             border-radius: 20px;
-            padding: 10px;
+            padding: 20px;
+            width: 280px;
+            text-align: center;
             border: 2px solid rgba(255,255,255,0.2);
             transition: transform 0.3s, box-shadow 0.3s;
-            display: flex;
-            justify-content: center;
+            text-decoration: none;
+            color: white;
         }
-        .steam-widget:hover {
+        .card:hover {
             transform: scale(1.03);
             box-shadow: 0 0 30px rgba(255,215,0,0.3);
             border-color: #ffd700;
         }
-
-        /* Стиль для iframe внутри контейнера */
-        .steam-widget iframe {
-            border: none;
+        .card img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            border: 3px solid #ffd700;
+            object-fit: cover;
+            margin-bottom: 10px;
+        }
+        .card h2 {
+            font-size: 1.8rem;
+            color: #ffe484;
+            margin-bottom: 5px;
+        }
+        .card .status {
+            font-size: 1rem;
+            color: #a8d8a8;
+            margin-bottom: 10px;
+        }
+        .card .info {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            color: #ddd;
+        }
+        .card .info span {
+            display: inline-block;
+            background: rgba(255,255,255,0.1);
+            padding: 2px 12px;
             border-radius: 12px;
-            width: 100%;
-            height: 265px;
+            margin: 3px 4px;
+            font-size: 0.9rem;
         }
 
         .btn {
@@ -202,7 +224,7 @@
             .header { justify-content: center; }
             .header .header-icon { display: none; }
             .header h1 { font-size: 2.2rem; padding: 0; letter-spacing: 2px; }
-            .steam-widget { width: 100%; max-width: 300px; }
+            .card { width: 100%; max-width: 300px; }
             .btn { font-size: 1.2rem; padding: 10px 20px; min-width: unset; width: 90%; max-width: 300px; border-radius: 30px; }
             .disclaimer { font-size: 0.6rem; padding: 6px 10px; }
         }
@@ -226,22 +248,50 @@
         <h1 id="pageTitle">We n Steam</h1>
     </div>
 
-    <!-- Контейнер с виджетами -->
     <div class="cards-container">
-        <!-- Виджет 1: Just a latte (AccountID: 1218710955) -->
-        <div class="steam-widget">
-            <iframe src="https://gamer2810.github.io/steam-miniprofile/?accountId=1218710955" scrolling="no" allowfullscreen></iframe>
-        </div>
-
-        <!-- Виджет 2: oumer (AccountID: 1110594422) -->
-        <div class="steam-widget">
-            <iframe src="https://gamer2810.github.io/steam-miniprofile/?accountId=1110594422" scrolling="no" allowfullscreen></iframe>
-        </div>
-
-        <!-- Виджет 3: Charlotte_cute_UwU (AccountID: 1050460194) -->
-        <div class="steam-widget">
-            <iframe src="https://gamer2810.github.io/steam-miniprofile/?accountId=1050460194" scrolling="no" allowfullscreen></iframe>
-        </div>
+        <a href="https://steamcommunity.com/id/angelvanillablood/" target="_blank" class="card">
+            <img src="gigi.png" alt="Just a latte">
+            <h2>Just a latte</h2>
+            <div class="status" id="status1">🟢 Online</div>
+            <div class="info">
+                <span id="games1">🎮 169 games</span>
+                <span id="level1">🏆 Level 23</span>
+                <span id="screens1">📦 594 screenshots</span>
+                <span id="workshop1">🛠 3 workshop items</span>
+            </div>
+        </a>
+        <a href="https://steamcommunity.com/id/pchelik228/" target="_blank" class="card">
+            <img src="phish.png" alt="oumer">
+            <h2>oumer</h2>
+            <div class="status" id="status2">⚪ Offline</div>
+            <div class="info">
+                <span id="games2">🎮 44 games</span>
+                <span id="level2">🏆 Level 13</span>
+                <span id="screens2">📦 5 screenshots</span>
+                <span id="workshop2">🛠 3 workshop items</span>
+            </div>
+        </a>
+        <a href="https://steamcommunity.com/id/Charlotte_cute_UwU/" target="_blank" class="card">
+            <img src="faradenza.png" alt="Charlotte_cute_UwU">
+            <h2>Charlotte_cute_UwU</h2>
+            <div class="status" id="status3">🟢 Online</div>
+            <div class="info">
+                <span id="games3">🎮 0 games</span>
+                <span id="level3">🏆 Level 0</span>
+                <span id="screens3">📦 0 screenshots</span>
+                <span id="workshop3">🛠 0 workshop items</span>
+            </div>
+        </a>
+        <a href="https://steamcommunity.com/id/angelvanillablood/myworkshopfiles/" target="_blank" class="card">
+            <img src="boykisshero.png" alt="Workshop">
+            <h2 id="wsTitle">Workshop</h2>
+            <div class="status" id="wsStatus">🛠 Items by Just a latte</div>
+            <div class="info">
+                <span id="wsItems">📦 3 items</span>
+                <span id="wsGame">🎮 Garry's Mod</span>
+                <span id="wsSubs">👀 3 subscribers</span>
+            </div>
+        </a>
     </div>
 
     <a href="index.html" class="btn" id="backLink">← Back to main</a>
@@ -301,11 +351,51 @@
             var translations = {
                 ru: {
                     title: 'We n Steam',
+                    status1: '🟢 В сети',
+                    games1: '🎮 169 игр',
+                    level1: '🏆 Уровень 23',
+                    screens1: '📦 594 скриншота',
+                    workshop1: '🛠 3 предмета в мастерской',
+                    status2: '⚪ Не в сети',
+                    games2: '🎮 44 игры',
+                    level2: '🏆 Уровень 13',
+                    screens2: '📦 5 скриншотов',
+                    workshop2: '🛠 3 предмета в мастерской',
+                    status3: '🟢 В сети',
+                    games3: '🎮 0 игр',
+                    level3: '🏆 Уровень 0',
+                    screens3: '📦 0 скриншотов',
+                    workshop3: '🛠 0 предметов в мастерской',
+                    wsTitle: 'Мастерская',
+                    wsStatus: '🛠 Предметы Just a latte',
+                    wsItems: '📦 3 предмета',
+                    wsGame: '🎮 Garry\'s Mod',
+                    wsSubs: '👀 3 подписчика',
                     back: '← На главную',
                     disclaimer: 'Все использованные изображения и материалы принадлежат их законным владельцам.\nСайт создан в развлекательных и пародийных целях, не является коммерческим проектом.'
                 },
                 en: {
                     title: 'We n Steam',
+                    status1: '🟢 Online',
+                    games1: '🎮 169 games',
+                    level1: '🏆 Level 23',
+                    screens1: '📦 594 screenshots',
+                    workshop1: '🛠 3 workshop items',
+                    status2: '⚪ Offline',
+                    games2: '🎮 44 games',
+                    level2: '🏆 Level 13',
+                    screens2: '📦 5 screenshots',
+                    workshop2: '🛠 3 workshop items',
+                    status3: '🟢 Online',
+                    games3: '🎮 0 games',
+                    level3: '🏆 Level 0',
+                    screens3: '📦 0 screenshots',
+                    workshop3: '🛠 0 workshop items',
+                    wsTitle: 'Workshop',
+                    wsStatus: '🛠 Items by Just a latte',
+                    wsItems: '📦 3 items',
+                    wsGame: '🎮 Garry\'s Mod',
+                    wsSubs: '👀 3 subscribers',
                     back: '← Back to main',
                     disclaimer: 'All images and materials used belong to their respective owners.\nThis site is for entertainment and parody purposes only, and is not a commercial project.'
                 }
@@ -318,6 +408,26 @@
             function setLanguage(lang) {
                 var t = translations[lang];
                 document.getElementById('pageTitle').textContent = t.title;
+                document.getElementById('status1').textContent = t.status1;
+                document.getElementById('games1').textContent = t.games1;
+                document.getElementById('level1').textContent = t.level1;
+                document.getElementById('screens1').textContent = t.screens1;
+                document.getElementById('workshop1').textContent = t.workshop1;
+                document.getElementById('status2').textContent = t.status2;
+                document.getElementById('games2').textContent = t.games2;
+                document.getElementById('level2').textContent = t.level2;
+                document.getElementById('screens2').textContent = t.screens2;
+                document.getElementById('workshop2').textContent = t.workshop2;
+                document.getElementById('status3').textContent = t.status3;
+                document.getElementById('games3').textContent = t.games3;
+                document.getElementById('level3').textContent = t.level3;
+                document.getElementById('screens3').textContent = t.screens3;
+                document.getElementById('workshop3').textContent = t.workshop3;
+                document.getElementById('wsTitle').textContent = t.wsTitle;
+                document.getElementById('wsStatus').textContent = t.wsStatus;
+                document.getElementById('wsItems').textContent = t.wsItems;
+                document.getElementById('wsGame').textContent = t.wsGame;
+                document.getElementById('wsSubs').textContent = t.wsSubs;
                 document.getElementById('backLink').textContent = t.back;
                 document.getElementById('disclaimer').innerHTML = t.disclaimer.replace(/\n/g, '<br>');
                 if (lang === 'ru') {
