@@ -343,7 +343,6 @@
             display: flex;
             flex-direction: column;
             gap: 12px;
-            margin-bottom: 25px;
         }
         .banned-list-item {
             background: rgba(0,0,0,0.5);
@@ -353,28 +352,6 @@
             font-size: 1.5rem;
             color: #ffe484;
             text-shadow: 0 0 10px rgba(255,200,0,0.3);
-        }
-        .unban-btn {
-            display: inline-block;
-            padding: 12px 30px;
-            border-radius: 8px;
-            font-size: 1.3rem;
-            font-weight: bold;
-            color: #ffe484;
-            text-decoration: none;
-            text-shadow: 0 0 10px rgba(255, 200, 0, 0.3);
-            border: 2px solid rgba(255, 200, 0, 0.4);
-            background: linear-gradient(145deg, rgba(50, 180, 100, 0.7), rgba(30, 140, 70, 0.8));
-            backdrop-filter: blur(4px);
-            box-shadow: 0 4px 15px rgba(0, 200, 80, 0.3);
-            transition: all 0.3s;
-            cursor: pointer;
-            font-family: 'Patrick Hand', cursive;
-        }
-        .unban-btn:hover {
-            transform: translateY(-3px) scale(1.02);
-            box-shadow: 0 8px 25px rgba(0, 255, 100, 0.5);
-            background: linear-gradient(145deg, rgba(70, 210, 120, 0.85), rgba(50, 170, 90, 0.9));
         }
         .banned-close {
             position: absolute;
@@ -440,7 +417,6 @@
             .banned-content { padding: 25px 20px; }
             .banned-content h2 { font-size: 1.6rem; }
             .banned-list-item { font-size: 1.2rem; padding: 10px 15px; }
-            .unban-btn { font-size: 1.1rem; padding: 10px 20px; }
         }
     </style>
     <link href="https://fonts.googleapis.com/css2?family=Patrick+Hand&display=swap" rel="stylesheet">
@@ -498,7 +474,7 @@
         </div>
     </div>
 
-    <!-- Модальное окно "Репрессированные" -->
+    <!-- Модальное окно "Репрессированные" (без кнопки разбана) -->
     <div class="banned-modal" id="bannedModal">
         <div class="banned-content">
             <button class="banned-close" id="bannedClose">✕</button>
@@ -507,7 +483,6 @@
                 <div class="banned-list-item">@YOURAOA</div>
                 <div class="banned-list-item">@Wopaal</div>
             </div>
-            <a href="https://store.steampowered.com/app/4884960/VESSELS_Noiret_Mansion/" target="_blank" class="unban-btn" id="unbanBtn">Оформить разбан</a>
         </div>
     </div>
 
@@ -671,7 +646,6 @@
                     btnRickroll: 'Рикролл',
                     btnBanned: 'Репрессированные',
                     bannedTitle: 'Репрессированные',
-                    unbanBtn: 'Оформить разбан',
                     tg: 't.me/MiskatonicTeaParty',
                     disclaimer: 'Все использованные изображения и материалы принадлежат их законным владельцам.\nСайт создан в развлекательных и пародийных целях, не является коммерческим проектом.'
                 },
@@ -684,7 +658,6 @@
                     btnRickroll: 'Rickroll',
                     btnBanned: 'Banned asses',
                     bannedTitle: 'Banned asses',
-                    unbanBtn: 'Get unbanned',
                     tg: 't.me/MiskatonicTeaParty',
                     disclaimer: 'All images and materials used belong to their respective owners.\nThis site is for entertainment and parody purposes only, and is not a commercial project.'
                 }
@@ -704,7 +677,6 @@
                 document.getElementById('btnRickroll').textContent = t.btnRickroll;
                 document.getElementById('btnBanned').textContent = t.btnBanned;
                 document.getElementById('bannedTitle').textContent = t.bannedTitle;
-                document.getElementById('unbanBtn').textContent = t.unbanBtn;
                 document.getElementById('tgLink').textContent = t.tg;
                 document.getElementById('disclaimer').innerHTML = t.disclaimer.replace(/\n/g, '<br>');
                 if (lang === 'ru') {
