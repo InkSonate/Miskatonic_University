@@ -9,11 +9,12 @@
         body {
             min-height: 100vh;
             background-color: #6a6d72;
-            background-image: url('TitleBackground.png');
-            background-size: cover;
-            background-position: center;
-            background-attachment: fixed;
-            background-repeat: no-repeat;
+            background-image: url('TitleBackground.png'),
+                linear-gradient(180deg, #a2a5a9 0%, #93969a 45%, #6a6d72 80%, #5c5f63 100%);
+            background-size: contain, cover;
+            background-position: top center, center;
+            background-attachment: fixed, fixed;
+            background-repeat: no-repeat, no-repeat;
             font-family: 'Patrick Hand', cursive, Arial, sans-serif;
             display: flex;
             flex-direction: column;
@@ -170,12 +171,7 @@
             .disclaimer { text-align: center; }
         }
         @media (max-width: 700px) {
-            body {
-                background-size: contain;
-                background-position: top center;
-                background-color: #6a6d72;
-                padding: 16px;
-            }
+            body { padding: 16px; }
             .lang-switch { top: 10px; right: 10px; padding: 3px 8px; }
             .lang-option { font-size: 0.9rem; padding: 3px 10px; }
             .volume-control { top: 55px; right: 8px; padding: 4px 8px; }
@@ -200,12 +196,17 @@
     </div>
 
     <div class="cards-container">
+        <!-- Виджет 1: Just a latte -->
         <div class="steam-widget">
             <iframe src="https://gamer2810.github.io/steam-miniprofile/?accountId=1218710955" scrolling="no" allowfullscreen></iframe>
         </div>
+
+        <!-- Виджет 2: oumer -->
         <div class="steam-widget">
             <iframe src="https://gamer2810.github.io/steam-miniprofile/?accountId=1110594422" scrolling="no" allowfullscreen></iframe>
         </div>
+
+        <!-- Виджет 3: Charlotte_cute_UwU -->
         <div class="steam-widget">
             <iframe src="https://gamer2810.github.io/steam-miniprofile/?accountId=1050460194" scrolling="no" allowfullscreen></iframe>
         </div>
@@ -263,7 +264,7 @@
             });
         })();
 
-        // === Переключение языка (заголовок удалён — строка про pageTitle убрана) ===
+        // === Переключение языка ===
         (function() {
             var translations = {
                 ru: {
