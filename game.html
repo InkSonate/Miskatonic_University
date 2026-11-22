@@ -9,11 +9,12 @@
         body {
             min-height: 100vh;
             background-color: #6a6d72;
-            background-image: url('TitleBackground.png');
-            background-size: cover;
-            background-position: center;
-            background-attachment: fixed;
-            background-repeat: no-repeat;
+            background-image: url('TitleBackground.png'),
+                linear-gradient(180deg, #a2a5a9 0%, #93969a 45%, #6a6d72 80%, #5c5f63 100%);
+            background-size: contain, cover;
+            background-position: top center, center;
+            background-attachment: fixed, fixed;
+            background-repeat: no-repeat, no-repeat;
             font-family: 'Patrick Hand', cursive, Arial, sans-serif;
             display: flex;
             flex-direction: column;
@@ -74,41 +75,50 @@
         .volume-control span { color: #f2ecd8; font-size: 1.2rem; }
         .volume-control input[type="range"] { width: 80px; accent-color: #4fb3ae; background: transparent; cursor: pointer; }
 
+        /* Ряд из двух игровых карточек */
+        .games-row {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: stretch;
+            gap: 24px;
+            width: 100%;
+            max-width: 1560px;
+        }
         .game-container {
+            flex: 1 1 480px;
+            max-width: 760px;
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
             align-items: flex-start;
-            gap: 40px;
-            max-width: 1200px;
-            width: 100%;
+            gap: 24px;
             margin: 0;
             background: rgba(23,40,42,0.66);
             backdrop-filter: blur(6px);
             border-radius: 24px;
-            padding: 26px 36px;
+            padding: 22px 26px;
             border: 1px solid rgba(79,179,174,0.25);
         }
 
-        .game-info { flex: 1 1 300px; display: flex; flex-direction: column; gap: 20px; }
+        .game-info { flex: 1 1 240px; display: flex; flex-direction: column; gap: 14px; }
         .game-info h2 {
-            font-size: 2.4rem;
+            font-size: 2rem;
             color: #e9e4a6;
             text-shadow: 0 0 20px rgba(233,228,166,0.35);
             word-break: break-word;
         }
         .game-info p {
-            font-size: 1.5rem;
-            line-height: 1.6;
+            font-size: 1.25rem;
+            line-height: 1.55;
             color: #e8e6df;
             text-shadow: 0 0 10px rgba(0,0,0,0.6);
         }
-        .game-info .btn-group { display: flex; flex-direction: column; gap: 12px; margin-top: 10px; }
+        .game-info .btn-group { display: flex; flex-direction: column; gap: 10px; margin-top: 6px; }
         .game-info .btn {
             align-self: flex-start;
-            padding: 12px 30px;
+            padding: 10px 24px;
             border-radius: 10px;
-            font-size: 1.45rem;
+            font-size: 1.3rem;
             font-weight: bold;
             font-family: 'Patrick Hand', cursive;
             color: #f2ecd8;
@@ -137,10 +147,10 @@
             box-shadow: 0 8px 26px rgba(160,170,130,0.4);
         }
 
-        .game-gallery { flex: 1 1 400px; display: flex; flex-direction: column; align-items: center; }
+        .game-gallery { flex: 1 1 260px; display: flex; flex-direction: column; align-items: center; }
         .game-gallery .main-image {
             width: 100%;
-            max-width: 500px;
+            max-width: 340px;
             border-radius: 12px;
             border: 2px solid rgba(79,179,174,0.6);
             cursor: zoom-in;
@@ -148,13 +158,13 @@
             object-fit: cover;
         }
         .game-gallery .main-image:hover { transform: scale(1.02); border-color: #4fb3ae; }
-        .gallery-nav { display: flex; gap: 20px; margin: 15px 0; }
+        .gallery-nav { display: flex; gap: 20px; margin: 12px 0; }
         .gallery-nav button {
             background: rgba(61,143,138,0.35);
             border: 2px solid #4fb3ae;
             color: #f2ecd8;
-            font-size: 1.8rem;
-            padding: 4px 18px;
+            font-size: 1.5rem;
+            padding: 3px 16px;
             border-radius: 30px;
             cursor: pointer;
             transition: 0.3s;
@@ -163,11 +173,35 @@
         .gallery-nav button:hover { background: #4fb3ae; color: #14282a; }
         .gallery-dots { display: flex; gap: 10px; }
         .gallery-dots span {
-            width: 12px; height: 12px; border-radius: 50%;
+            width: 10px; height: 10px; border-radius: 50%;
             background: rgba(242,236,216,0.3);
             transition: 0.3s;
         }
         .gallery-dots span.active { background: #4fb3ae; box-shadow: 0 0 10px #4fb3ae; }
+
+        /* Кнопка "на главную" под карточками */
+        .btn-back {
+            display: inline-block;
+            padding: 12px 26px;
+            border-radius: 10px;
+            font-size: 1.45rem;
+            font-weight: bold;
+            font-family: 'Patrick Hand', cursive;
+            color: #f2ecd8;
+            text-decoration: none;
+            text-shadow: 0 1px 3px rgba(0,0,0,0.5);
+            border: 1px solid rgba(242,236,216,0.28);
+            background: linear-gradient(145deg, rgba(47,93,94,0.92), rgba(30,62,63,0.92));
+            backdrop-filter: blur(4px);
+            box-shadow: 0 4px 14px rgba(10,20,20,0.45), inset 0 1px 0 rgba(255,255,255,0.12);
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+        .btn-back:hover {
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 8px 26px rgba(79,179,174,0.35);
+            background: linear-gradient(145deg, rgba(61,143,138,0.95), rgba(43,92,93,0.95));
+        }
 
         .modal {
             display: none;
@@ -225,23 +259,30 @@
 
         @media (max-width: 1100px) {
             body { align-items: center; }
+            .games-row { justify-content: center; }
+        }
+        @media (max-height: 760px) and (min-width: 701px) {
+            body { gap: 10px; padding: 14px 20px; }
+            .game-container { padding: 16px 20px; gap: 18px; }
+            .game-info h2 { font-size: 1.7rem; }
+            .game-info p { font-size: 1.1rem; }
+            .game-info .btn { padding: 8px 20px; font-size: 1.15rem; }
+            .game-gallery .main-image { max-width: 300px; }
+            .btn-back { padding: 8px 20px; font-size: 1.25rem; }
         }
         @media (max-width: 700px) {
-            body {
-                background-size: contain;
-                background-position: top center;
-                background-color: #6a6d72;
-                padding: 16px;
-            }
+            body { padding: 16px; }
             .lang-switch { top: 10px; right: 10px; padding: 3px 8px; }
             .lang-option { font-size: 0.9rem; padding: 3px 10px; }
             .volume-control { top: 55px; right: 8px; padding: 4px 8px; }
             .volume-control input[type="range"] { width: 50px; }
-            .game-container { flex-direction: column; padding: 20px; }
-            .game-info h2 { font-size: 2rem; }
-            .game-info p { font-size: 1.2rem; }
+            .games-row { gap: 16px; }
+            .game-container { flex-direction: column; padding: 18px; }
+            .game-info h2 { font-size: 1.7rem; }
+            .game-info p { font-size: 1.1rem; }
             .game-info .btn { font-size: 1.2rem; padding: 10px 25px; align-self: stretch; text-align: center; }
             .game-gallery .main-image { max-width: 100%; }
+            .btn-back { width: 90%; max-width: 300px; text-align: center; font-size: 1.2rem; }
             .modal-content img { max-height: 60vh; }
             .modal-nav button { font-size: 1.8rem; padding: 3px 15px; }
             .modal-close { font-size: 2.5rem; top: -30px; }
@@ -261,37 +302,58 @@
         <input type="range" min="0" max="1" step="0.01" value="0.5" id="volumeSlider">
     </div>
 
-    <div class="game-container">
-        <div class="game-info">
-            <h2 id="gameName">混凝土中的女孩 (Girl in Concrete)</h2>
-            <p id="gameDesc">
-                Морита Хару была убита 17 лет назад, за свои грехи при жизни она попадает в ад, переживая бесконечный цикл одинаковых дней и пытаясь все исправить.
-            </p>
-            <div class="btn-group">
-                <a href="https://drive.google.com/file/d/18fjP4pVlSU6oEC6KMNpR8dlvjyB_1QU3/view?usp=sharing" target="_blank" class="btn btn-download" id="downloadBtn">Скачать</a>
-                <a href="index.html" class="btn" id="backBtn">← Back to main</a>
+    <div class="games-row">
+
+        <!-- Игра 1: Girl in Concrete -->
+        <div class="game-container">
+            <div class="game-info">
+                <h2 id="gameName">混凝土中的女孩 (Girl in Concrete)</h2>
+                <p id="gameDesc">
+                    Морита Хару была убита 17 лет назад, за свои грехи при жизни она попадает в ад, переживая бесконечный цикл одинаковых дней и пытаясь все исправить.
+                </p>
+                <div class="btn-group">
+                    <a href="https://drive.google.com/file/d/18fjP4pVlSU6oEC6KMNpR8dlvjyB_1QU3/view?usp=sharing" target="_blank" class="btn btn-download" id="downloadBtn">Скачать</a>
+                </div>
+            </div>
+            <div class="game-gallery">
+                <img class="main-image" id="mainImage" src="gmscreen1.png" alt="screenshot">
+                <div class="gallery-nav">
+                    <button id="prevImage">◀</button>
+                    <button id="nextImage">▶</button>
+                </div>
+                <div class="gallery-dots" id="dotsContainer">
+                    <span class="active"></span>
+                    <span></span>
+                    <span></span>
+                </div>
             </div>
         </div>
 
-        <div class="game-gallery">
-            <img class="main-image" id="mainImage" src="gmscreen1.png" alt="screenshot">
-            <div class="gallery-nav">
-                <button id="prevImage">◀</button>
-                <button id="nextImage">▶</button>
+        <!-- Игра 2: Miskatonic Tea Party -->
+        <div class="game-container">
+            <div class="game-info">
+                <h2 id="teaName">Miskatonic Tea Party</h2>
+                <p id="teaDesc">
+                    Чиз устраивается помощником библиотекаря в Мискатоникский университет, но она даже не подозревает, какие приключения её ждут.
+                </p>
+                <div class="btn-group">
+                    <a href="https://drive.google.com/drive/folders/1s29j1Byocq9Yp90empCMquCJ_jNjSTuV" target="_blank" class="btn btn-download" id="teaDownloadBtn">Скачать</a>
+                </div>
             </div>
-            <div class="gallery-dots" id="dotsContainer">
-                <span class="active"></span>
-                <span></span>
-                <span></span>
+            <div class="game-gallery">
+                <img class="main-image" id="teaImage" src="HPL.png" alt="Miskatonic Tea Party screenshot">
             </div>
         </div>
+
     </div>
+
+    <a href="index.html" class="btn-back" id="backBtn">← Back to main</a>
 
     <div class="modal" id="modal">
         <div class="modal-content">
             <button class="modal-close" id="modalClose">✕</button>
             <img id="modalImage" src="" alt="full">
-            <div class="modal-nav">
+            <div class="modal-nav" id="modalNav">
                 <button id="modalPrev">◀</button>
                 <button id="modalNext">▶</button>
             </div>
@@ -343,19 +405,23 @@
             });
         })();
 
-        // --- Переключение языка (заголовок удалён — строка про pageTitle убрана) ---
+        // --- Переключение языка ---
         (function() {
             var translations = {
                 ru: {
                     name: '混凝土中的女孩 (Girl in Concrete)',
                     desc: 'Морита Хару была убита 17 лет назад, за свои грехи при жизни она попадает в ад, переживая бесконечный цикл одинаковых дней и пытаясь все исправить.',
                     download: 'Скачать',
+                    teaDesc: 'Чиз устраивается помощником библиотекаря в Мискатоникский университет, но она даже не подозревает, какие приключения её ждут.',
+                    teaDownload: 'Скачать',
                     back: '← На главную'
                 },
                 en: {
                     name: 'Girl in Concrete',
                     desc: 'Morita Haru was killed 17 years ago. For her sins in life, she is sent to hell, reliving an endless cycle of identical days and trying to make things right.',
                     download: 'Download',
+                    teaDesc: 'Cheese gets hired as a librarian\'s assistant at Miskatonic University, but she has no idea what adventures await her.',
+                    teaDownload: 'Download',
                     back: '← Back to main'
                 }
             };
@@ -369,6 +435,8 @@
                 document.getElementById('gameName').textContent = t.name;
                 document.getElementById('gameDesc').textContent = t.desc;
                 document.getElementById('downloadBtn').textContent = t.download;
+                document.getElementById('teaDesc').textContent = t.teaDesc;
+                document.getElementById('teaDownloadBtn').textContent = t.teaDownload;
                 document.getElementById('backBtn').textContent = t.back;
                 if (lang === 'ru') {
                     langRu.classList.add('active');
@@ -391,20 +459,23 @@
             setLanguage(currentLang);
         })();
 
-        // --- Галерея ---
+        // --- Галерея первой игры + просмотр единственного скриншота второй ---
         (function() {
             var images = ['gmscreen1.png', 'gmscreen2.png', 'slon.png'];
             var currentIndex = 0;
             var mainImage = document.getElementById('mainImage');
+            var teaImage = document.getElementById('teaImage');
             var prevBtn = document.getElementById('prevImage');
             var nextBtn = document.getElementById('nextImage');
             var dots = document.querySelectorAll('#dotsContainer span');
             var modal = document.getElementById('modal');
             var modalImage = document.getElementById('modalImage');
             var modalClose = document.getElementById('modalClose');
+            var modalNav = document.getElementById('modalNav');
             var modalPrev = document.getElementById('modalPrev');
             var modalNext = document.getElementById('modalNext');
             var isModalOpen = false;
+            var singleOpen = false; // открыт ли одиночный скриншот (без стрелок)
 
             function updateMain(index) {
                 mainImage.src = images[index];
@@ -428,8 +499,20 @@
                 openModal(currentIndex);
             });
 
+            // Вторая игра: одна картинка HPL.png, стрелки не нужны
+            teaImage.addEventListener('click', function() {
+                modalImage.src = 'HPL.png';
+                modalNav.style.display = 'none';
+                singleOpen = true;
+                modal.classList.add('active');
+                isModalOpen = true;
+                document.body.style.overflow = 'hidden';
+            });
+
             function openModal(index) {
                 modalImage.src = images[index];
+                modalNav.style.display = 'flex';
+                singleOpen = false;
                 modal.classList.add('active');
                 isModalOpen = true;
                 document.body.style.overflow = 'hidden';
@@ -439,6 +522,7 @@
             function closeModal() {
                 modal.classList.remove('active');
                 isModalOpen = false;
+                singleOpen = false;
                 document.body.style.overflow = '';
             }
 
@@ -449,6 +533,7 @@
             });
 
             modalPrev.addEventListener('click', function() {
+                if (singleOpen) return;
                 var newIndex = (currentIndex - 1 + images.length) % images.length;
                 currentIndex = newIndex;
                 modalImage.src = images[newIndex];
@@ -456,6 +541,7 @@
             });
 
             modalNext.addEventListener('click', function() {
+                if (singleOpen) return;
                 var newIndex = (currentIndex + 1) % images.length;
                 currentIndex = newIndex;
                 modalImage.src = images[newIndex];
@@ -466,9 +552,9 @@
                 if (!isModalOpen) return;
                 if (e.key === 'Escape') {
                     closeModal();
-                } else if (e.key === 'ArrowLeft') {
+                } else if (e.key === 'ArrowLeft' && !singleOpen) {
                     modalPrev.click();
-                } else if (e.key === 'ArrowRight') {
+                } else if (e.key === 'ArrowRight' && !singleOpen) {
                     modalNext.click();
                 }
             });
